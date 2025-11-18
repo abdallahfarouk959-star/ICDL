@@ -1501,6 +1501,89 @@
         }
       }
 
+      // --- Explanation term translations (persisted) ---
+      const EXPLAIN_TERMS_KEY = 'intro_explain_terms_v1';
+      function loadExplainTerms() {
+        try {
+          const raw = localStorage.getItem(EXPLAIN_TERMS_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {
+          // ignore
+        }
+        return {};
+      }
+
+      function saveExplainTerms(obj) {
+        try {
+          localStorage.setItem(EXPLAIN_TERMS_KEY, JSON.stringify(obj || {}));
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      let explainTermTranslations = loadExplainTerms();
+
+      function getTermTranslation(term) {
+        return explainTermTranslations[term] || null;
+      }
+
+      function setTermTranslation(term, value) {
+        if (!term) return;
+        if (value && value.trim().length) explainTermTranslations[term] = value.trim();
+        else delete explainTermTranslations[term];
+        saveExplainTerms(explainTermTranslations);
+      }
+
+      function detectEnglishTermsInText(text) {
+        if (!text) return [];
+        // match words containing Latin letters (common technical terms / acronyms)
+        const re = /\b[A-Za-z0-9][A-Za-z0-9\-\/\.]{1,}\b/g;
+        const found = text.match(re) || [];
+        // filter out short/one-letter tokens and common URL pieces
+        const filtered = found.filter((s) => s.length > 1 && !/^https?:\/\//i.test(s));
+        // unique
+        return Array.from(new Set(filtered));
+      }
+
+      function createPointNodesWithTerms(text) {
+        const nodes = [];
+        const re = /\b[A-Za-z0-9][A-Za-z0-9\-\/\.]{1,}\b/g;
+        let lastIndex = 0;
+        let match;
+        while ((match = re.exec(text)) !== null) {
+          const term = match[0];
+          const start = match.index;
+          if (start > lastIndex) {
+            nodes.push(document.createTextNode(text.slice(lastIndex, start)));
+          }
+          const span = document.createElement('span');
+          // simplified, subtle style (non-interactive)
+          span.className = 'underline decoration-dotted text-indigo-700';
+          span.dataset.term = term;
+          span.textContent = term;
+
+          const trans = getTermTranslation(term);
+          if (trans) {
+            const small = document.createElement('span');
+            small.className = 'text-xs text-gray-600 mr-1';
+            small.textContent = ` (${trans})`;
+            // show translation after the term (subtle)
+            nodes.push(span);
+            nodes.push(small);
+          } else {
+            nodes.push(span);
+          }
+
+          lastIndex = re.lastIndex;
+        }
+        if (lastIndex < text.length) nodes.push(document.createTextNode(text.slice(lastIndex)));
+        // If no matches found, return a single text node for the whole text
+        if (nodes.length === 0) return [document.createTextNode(text)];
+        return nodes;
+      }
+
+      // Glossary panel removed for a cleaner UI; translations still stored and editable by clicking terms.
+
       function renderHeader() {
         const t = texts[state.lang];
         document.getElementById('title-main').textContent = t.titleMain;
@@ -1538,7 +1621,7 @@
         });
       }
 
-      function scrollToExplanation(topicId) {
+      function scrollToExplanation(topicId, context = {}) {
         state.activeTab = 'explain';
         renderTabs();
         renderContent();
@@ -1551,6 +1634,81 @@
             const offset = 90;
             const scrollY = window.pageYOffset + rect.top - offset;
             window.scrollTo({ top: scrollY, behavior: 'smooth' });
+
+            // If a question context is provided, show a contextual banner
+            const qId = context.qId;
+            let showBanner = false;
+            let bannerText = '';
+            if (qId) {
+              try {
+                const qObj = questionsMCQ['en'].find((x) => x.id === qId);
+                const saved = mcqState['en'] && mcqState['en'].answers ? mcqState['en'].answers[qId] : null;
+
+                let wrongFlag = false;
+                if (saved) {
+                  if (Array.isArray(saved)) {
+                    const correct = Array.isArray(qObj.answer) ? qObj.answer.slice().sort() : [qObj.answer];
+                    const picked = saved.slice().sort();
+                    wrongFlag = JSON.stringify(correct) !== JSON.stringify(picked);
+                  } else if (typeof saved === 'object') {
+                    wrongFlag = !!saved.wrong;
+                  } else if (typeof saved === 'number') {
+                    wrongFlag = qObj ? saved !== qObj.answer : false;
+                  }
+                }
+
+                if (wrongFlag) {
+                  showBanner = true;
+                  bannerText = state.lang === 'ar' ? `لقد أجبت على السؤال (${qId}) بشكل غير صحيح. راجع الشرح التالي.` : `You answered question (${qId}) incorrectly. Review the explanation below.`;
+                } else if (qId) {
+                  // If not wrong, still offer a gentle contextual note
+                  showBanner = true;
+                  bannerText = state.lang === 'ar' ? `ملاحظة: هذا الشرح متعلق بالسؤال (${qId}).` : `Note: this explanation relates to question (${qId}).`;
+                }
+              } catch (e) {
+                // ignore any lookup errors
+              }
+            }
+
+            if (showBanner) {
+              // avoid duplicate banners
+              const existing = document.getElementById(`explain-banner-${topicId}`);
+              if (!existing) {
+                const banner = document.createElement('div');
+                banner.id = `explain-banner-${topicId}`;
+                banner.className = 'p-3 mb-3 rounded text-sm';
+                banner.style.background = 'linear-gradient(90deg, rgba(255,249,230,1) 0%, rgba(255,243,230,1) 100%)';
+                banner.style.border = '1px solid #f6e05e';
+                banner.style.color = '#92400e';
+                banner.textContent = bannerText;
+
+                // insert banner as first child of the explanation card body
+                el.insertBefore(banner, el.firstChild);
+
+                // auto-remove after 9 seconds
+                setTimeout(() => {
+                  const b = document.getElementById(`explain-banner-${topicId}`);
+                  if (b && b.parentElement) b.parentElement.removeChild(b);
+                }, 9000);
+              }
+            }
+
+            // Add a temporary highlight to draw the user's attention
+            const prevTransition = el.style.transition;
+            const prevBox = el.style.boxShadow;
+            const prevBorderRadius = el.style.borderRadius;
+            el.style.transition = 'box-shadow 0.3s ease, transform 0.15s ease';
+            el.style.boxShadow = '0 6px 30px rgba(59,130,246,0.25)';
+            el.style.borderRadius = '0.5rem';
+            el.style.transform = 'translateY(-4px)';
+            setTimeout(() => {
+              el.style.transform = '';
+            }, 160);
+            setTimeout(() => {
+              el.style.boxShadow = prevBox || '';
+              el.style.transition = prevTransition || '';
+              el.style.borderRadius = prevBorderRadius || '';
+            }, 4200);
           }
         }, 50);
       }
@@ -1599,15 +1757,20 @@
             const body = document.createElement('div');
             body.className = 'p-4 sm:p-6 text-gray-700 leading-relaxed';
 
-            const ul = document.createElement('ul');
-            ul.className = 'list-disc space-y-1 sm:space-y-2 pl-4 sm:pl-6 text-sm sm:text-base';
+            // (simplified) no glossary panel — terms are inline and editable by clicking
+
+            // Render points with better spacing and term highlighting
+            const pointsWrapper = document.createElement('div');
+            pointsWrapper.className = 'space-y-3 text-sm sm:text-base';
             module.points.forEach((p) => {
-              const li = document.createElement('li');
-              li.textContent = p;
-              ul.appendChild(li);
+              const pEl = document.createElement('div');
+              pEl.className = 'bg-white/0 rounded px-2 py-2 leading-relaxed text-gray-800';
+              const nodes = createPointNodesWithTerms(p);
+              nodes.forEach((n) => pEl.appendChild(n));
+              pointsWrapper.appendChild(pEl);
             });
 
-            body.appendChild(ul);
+            body.appendChild(pointsWrapper);
             headerBodyWrapper.appendChild(header);
             headerBodyWrapper.appendChild(body);
 
@@ -1700,7 +1863,7 @@
                 ? '↗ انتقل مباشرة إلى شرح هذا الجزء'
                 : '↗ Go directly to this topic explanation';
 
-            goExplainBtn.addEventListener('click', () => scrollToExplanation(q.topicId));
+            goExplainBtn.addEventListener('click', () => scrollToExplanation(q.topicId, { qId: q.id }));
 
             // For multi-answer questions render checkboxes and a Confirm button
             if (q.multiple) {
