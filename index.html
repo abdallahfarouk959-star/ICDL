@@ -1263,7 +1263,8 @@
             container.appendChild(card);
           });
         } else if (state.activeTab === 'questions') {
-          const list = questionsMCQ[state.lang];
+          // Use English questions always, regardless of selected UI language
+          const list = questionsMCQ['en'];
 
           const controls = document.createElement('div');
           controls.className = 'mb-4 flex justify-between items-center';
@@ -1282,7 +1283,8 @@
             state.lang === 'ar' ? '⟳ إعادة تعيين الأسئلة' : '⟳ Reset questions';
 
           resetBtn.addEventListener('click', () => {
-            initMcqStateForLang(state.lang);
+            // Reset English question order/state only
+            initMcqStateForLang('en');
             saveMcqState();
             renderContent();
           });
@@ -1291,7 +1293,8 @@
           controls.appendChild(resetBtn);
           container.appendChild(controls);
 
-          const langState = mcqState[state.lang];
+          // Persist answers using the English MCQ state only
+          const langState = mcqState['en'];
           const order = langState.order;
 
           order.forEach((qIndex, displayIndex) => {
@@ -1352,12 +1355,12 @@
 
               li.addEventListener('click', () => {
                 // لا تغيير للإجابة بعد أول اختيار
-                if (typeof mcqState[state.lang].answers[q.id] !== 'undefined') {
+                if (typeof mcqState['en'].answers[q.id] !== 'undefined') {
                   return;
                 }
 
                 const isCorrect = idx === q.answer;
-                mcqState[state.lang].answers[q.id] = idx;
+                mcqState['en'].answers[q.id] = idx;
                 saveMcqState();
 
                 const correctText = q.options[q.answer];
