@@ -1,3854 +1,646 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intro to Computers - Revision Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EEKEPZN6SE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise - By AO Nexus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      gtag('config', 'G-EEKEPZN6SE');
-    </script>
-  </head>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+        }
 
-  <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:p-6">
-    <div class="max-w-6xl mx-auto" id="app-root">
-      <header
-        class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 sm:p-8 rounded-lg shadow-lg mb-6 sm:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div>
-          <h1 class="text-2xl sm:text-4xl font-bold mb-1" id="title-main"></h1>
-          <p class="text-blue-100 text-sm sm:text-lg" id="title-sub"></p>
-        </div>
-        <div class="flex items-center gap-3">
-          <label for="lang-select" class="text-sm sm:text-base font-semibold" id="label-language"></label>
-          <select
-            id="lang-select"
-            class="bg-white text-blue-700 rounded-md px-3 py-1 text-sm sm:text-base shadow focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-          </select>
-        </div>
-      </header>
+        /* Splash Page Styles */
+        #splash-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
 
-      <nav class="flex flex-wrap gap-3 sm:gap-4 mb-6 sm:mb-8" id="tabs-nav"></nav>
+        #splash-page h1 {
+            font-size: 5em;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-in;
+        }
 
-      <main id="tab-content" class="space-y-4"></main>
+        #splash-page .subtitle {
+            font-size: 2em;
+            color: #ffffff;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            animation: fadeIn 1.5s ease-in;
+        }
 
-      <footer
-        class="mt-10 sm:mt-12 bg-indigo-50 p-4 sm:p-6 rounded-lg text-center border-2 border-indigo-200"
-      >
-        <p class="text-indigo-900 font-semibold mb-2" id="footer-title"></p>
-        <p class="text-indigo-800 text-sm sm:text-base" id="footer-text"></p>
-      </footer>
+        #start-btn {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: #ffffff;
+            color: #4CAF50;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: fadeIn 2s ease-in;
+        }
+
+        #start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #f0f0f0;
+        }
+
+        /* Exercise Page Styles */
+        #exercise-page {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 10px;
+        }
+
+        .exercise-header h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .help-icon {
+            font-size: 1.2em;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .question-container {
+            background: #2d2d44;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            color: #ffffff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            background: #3a3a52;
+            border: 2px solid #4a4a6a;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            background: #454560;
+            border-color: #5a5a7a;
+        }
+
+        .option-item.selected {
+            border-color: #66bb6a;
+            box-shadow: 0 0 0 3px rgba(102,187,106,0.06);
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #4CAF50;
+        }
+
+        .option-item label {
+            flex: 1;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 1.1em;
+            user-select: none;
+        }
+
+        /* Answer Feedback Styles */
+        .option-item.correct {
+            background: #2d5a2d;
+            border-color: #4CAF50;
+        }
+
+        .option-item.correct::after {
+            content: "✓";
+            color: #4CAF50;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .option-item.incorrect {
+            background: #5a2d2d;
+            border-color: #f44336;
+        }
+
+        .option-item.incorrect::after {
+            content: "✗";
+            color: #f44336;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .question-container.answered {
+            background: #1e4d1e;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: #4CAF50;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            background: #3a3a52;
+            color: #ffffff;
+            border: 2px solid #4a4a6a;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #454560;
+            border-color: #5a5a7a;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .question-number {
+            text-align: center;
+            color: #888;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #splash-page h1 {
+                font-size: 3em;
+            }
+
+            #splash-page .subtitle {
+                font-size: 1.5em;
+            }
+
+            .exercise-header h1 {
+                font-size: 2em;
+            }
+
+            .question-text {
+                font-size: 1.2em;
+            }
+
+            .question-container {
+                padding: 25px;
+            }
+        }
+        /* Sidebar question nav */
+        #nav-toggle {
+            position: fixed;
+            left: 18px;
+            top: 18px;
+            z-index: 1200;
+            background: #ffffff;
+            color: #4CAF50;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        #sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg,#23233a,#2d2d44);
+            color: #fff;
+            z-index: 1100;
+            transition: left 0.28s ease;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            padding: 20px 12px;
+            overflow-y: auto;
+        }
+
+        #sidebar.open { left: 0; }
+
+        #sidebar h3 { margin: 6px 0 12px 8px; font-size: 1.1em; }
+        #close-nav { background: transparent; border: none; color: #fff; font-size: 1.6em; cursor: pointer; float: right; }
+        #question-list { list-style: none; padding: 6px; margin: 0; }
+        #question-list li { padding: 10px 12px; margin: 6px 0; background: rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; }
+        #question-list li:hover { background: rgba(255,255,255,0.07); }
+        #question-list li.active { background: rgba(76,175,80,0.14); border: 1px solid rgba(76,175,80,0.2); }
+        #question-list li.answered::after { content: '✓'; float: right; color: #4CAF50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <!-- Splash Page -->
+    <div id="splash-page">
+        <h1>By Team AO Nexus</h1>
+        <div class="subtitle">EELU-Aswan Branch</div>
+        <button id="start-btn">Start »</button>
     </div>
 
+    <!-- Exercise Page -->
+    <button id="nav-toggle">☰ Questions</button>
+    <aside id="sidebar" aria-hidden="true">
+        <button id="close-nav">×</button>
+        <h3>Questions</h3>
+        <ul id="question-list"></ul>
+    </aside>
+
+    <div id="exercise-page">
+        <div class="exercise-header">
+            <h1>Exercise</h1>
+            <span class="help-icon">?</span>
+        </div>
+        
+        <div class="question-number" id="question-number"></div>
+        
+        <div class="question-container" id="question-container">
+            <div class="question-text" id="question-text"></div>
+            
+            <div class="options-container" id="options-container"></div>
+            
+            <button class="submit-btn" id="submit-btn">Submit Answer »</button>
+            
+            <div class="navigation-buttons">
+                <button class="nav-btn" id="prev-btn">« Previous</button>
+                <button class="nav-btn" id="next-btn">Next »</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions-data.js"></script>
     <script>
-      const state = {
-        lang: 'ar',
-        activeTab: 'mcq',
-      };
 
-      const texts = {
-        ar: {
-          titleMain: 'Intro to Computers - دليل المذاكرة الكامل',
-          titleSub: 'شرح مبسّط • أسئلة اختيار من متعدد',
-          labelLanguage: 'اللغة:',
-          tabs: {
-            explain: '📚 الشرح',
-            questions: '❓ الأسئلة (MCQ)',
-          },
-          footerTitle: '✅ نصائح للمذاكرة',
-          footerText:
-            'ابدأ بالشرح، جرّب الأسئلة • ركّز على الفهم ثم الثبات بالأسئلة الكثيرة',
-        },
-        en: {
-          titleMain: 'Intro to Computers - Full Revision Guide',
-          titleSub: 'Clear explanation • MCQ practice',
-          labelLanguage: 'Language:',
-          tabs: {
-            explain: '📚 Explanation',
-            questions: '❓ Questions (MCQ)',
-          },
-          footerTitle: '✅ Study Tips',
-          footerText:
-            'Start with explanation, practice MCQs • Focus on understanding first',
-        },
-      };
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let isAnswered = false;
 
-      const questionsMCQ = {
-        ar: [
-          {
-            id: 'q1',
-            topicId: 'module1',
-            question: 'أهم جزء في نظام الحاسب هو؟',
-            options: ['السوفت وير', 'الهاردوير', 'المستخدمون (People)', 'الشبكة'],
-            answer: 2,
-          },
-          {
-            id: 'q2',
-            topicId: 'module3',
-            question: 'أي مما يلي يعتبر Application Software؟',
-            options: ['Windows', 'Antivirus Utility', 'Microsoft Word', 'BIOS'],
-            answer: 2,
-          },
-          {
-            id: 'q3',
-            topicId: 'module2',
-            question: 'ISP هو اختصار لـ:',
-            options: [
-              'Internet Service Provider',
-              'Internal System Program',
-              'International Server Protocol',
-              'Integrated Service Port',
-            ],
-            answer: 0,
-          },
-          {
-            id: 'q4',
-            topicId: 'module2',
-            question: 'أي بروتوكول يُستخدم في عناوين المواقع (URL) العادية؟',
-            options: ['ftp://', 'http://', 'smtp://', 'file://'],
-            answer: 1,
-          },
-          {
-            id: 'q5',
-            topicId: 'module3',
-            question: 'أي مما يلي يُعد مثالًا على Network OS؟',
-            options: ['Windows Server', 'Android', 'MS Word', 'Firmware'],
-            answer: 0,
-          },
-          {
-            id: 'q6',
-            topicId: 'module4',
-            question: 'ALU في المعالج مسؤولة عن:',
-            options: [
-              'تخزين الملفات',
-              'تنفيذ العمليات الحسابية والمنطقية',
-              'عرض المعلومات على الشاشة',
-              'إدارة الذاكرة',
-            ],
-            answer: 1,
-          },
-          {
-            id: 'q7',
-            topicId: 'module2',
-            question: 'أي من التالي ليس نوعًا من التوبولوجي؟',
-            options: ['Star', 'Bus', 'Tree', 'Hex'],
-            answer: 3,
-          },
-          {
-            id: 'q8',
-            topicId: 'module2',
-            question: 'PAN تشير إلى:',
-            options: [
-              'شبكة شخصية لمسافة قصيرة',
-              'شبكة عامة',
-              'شبكة أكاديمية خاصة',
-              'شبكة مهنية',
-            ],
-            answer: 0,
-          },
-          {
-            id: 'q9',
-            topicId: 'module4',
-            question: 'أي منفذ يُستخدم غالبًا لتوصيل كابل الشبكة؟',
-            options: ['USB', 'Ethernet', 'HDMI', 'VGA'],
-            answer: 1,
-          },
-          {
-            id: 'q10',
-            topicId: 'module4',
-            question: 'البايت الواحد يساوي:',
-            options: ['4 بت', '8 بت', '16 بت', '32 بت'],
-            answer: 1,
-          },
-          {
-            id: 'q11',
-            topicId: 'module1',
-            question:
-              'الحاسب هو مصطلح عام يصف أي تقنية تساعد في إنتاج وتحويل وتخزين وتبادل المعلومات.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q12',
-            topicId: 'module1',
-            question:
-              'البرنامج هو مجموعة من التعليمات التي تعطى للحاسب حول ما يجب أن يفعله في الخطوة التالية.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q13',
-            topicId: 'module1',
-            question: 'الشبكة هي نظام اتصالات يربط بين حاسوبين أو أكثر.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q14',
-            topicId: 'module1',
-            question:
-              'تكنولوجيا المعلومات والاتصالات تجمع وتعالج البيانات وتخزينها وتحليلها وتبادلها لأغراض محددة.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q15',
-            topicId: 'module1',
-            question: 'الحواسيب الصغيرة هي الأكثر استخدامًا.',
-            options: ['صحيح', 'خطأ'],
-            answer: 1,
-          },
-          {
-            id: 'q16',
-            topicId: 'module4',
-            question:
-              'التخزين الصلب، على عكس الأقراص الصلبة، لا يحتوي على أجزاء متحركة، وهو أكثر موثوقية ويستخدم طاقة أقل.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q17',
-            topicId: 'module1',
-            question:
-              'أجهزة الإدخال تترجم المعلومات المعالجة من الحاسب إلى شكل يمكن للبشر فهمه.',
-            options: ['صحيح', 'خطأ'],
-            answer: 1,
-          },
-          {
-            id: 'q18',
-            topicId: 'module1',
-            question:
-              'اللابتوب هو نوع من الحواسيب صغير بما يكفي ليتم وضعه على مكتب أو بجانبه، ولكنه كبير جدًا لتحمله.',
-            options: ['صحيح', 'خطأ'],
-            answer: 1,
-          },
-          {
-            id: 'q19',
-            topicId: 'module4',
-            question:
-              'وحدة النظام هي الحالة الرئيسية للحاسب التي تحتوي على المكونات الإلكترونية المستخدمة لمعالجة البيانات.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q20',
-            topicId: 'module4',
-            question: 'وحدة التحكم هي اللوحة الرئيسية لوحدة النظام.',
-            options: ['صحيح', 'خطأ'],
-            answer: 1,
-          },
-          {
-            id: 'q21',
-            topicId: 'module4',
-            question: 'ALU هي المكونة التي توجّه وتنسّق معظم العمليات في الحاسب.',
-            options: ['صحيح', 'خطأ'],
-            answer: 1,
-          },
-          {
-            id: 'q22',
-            topicId: 'module4',
-            question: 'الوحدة المستخدمة لقياس معدل الساعة هي هرتز (Hz).',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-          {
-            id: 'q23',
-            topicId: 'module4',
-            question: 'معدل ساعة المعالج الأعلى يعني أداء الحاسب أفضل.',
-            options: ['صحيح', 'خطأ'],
-            answer: 0,
-          },
-        ],
-        en: [
-          {
-            id: 'q1',
-            topicId: 'module1',
-            question:
-              'In a network database, each child node may have more than one parent node; this is known as a:',
-            options: [
-              'hierarchy',
-              'parent relationship',
-              'many-to-many relationship',
-              'relational relationship',
-            ],
-            answer: 2,
-          },
-          {
-            id: 'q2',
-            topicId: 'module1',
-            question: 'Connections between parent nodes and child nodes are provided by:',
-            options: ['characters', 'objects', 'DBA', 'pointers'],
-            answer: 3,
-          },
-          {
-            id: 'q3',
-            topicId: 'module1',
-            question:
-              'A connection system that permits the sharing of resources by different computers:',
-            options: ['Database', 'Procedures', 'Networks', 'Hardware'],
-            answer: 2,
-          },
-          {
-            id: 'q4',
-            topicId: 'module1',
-            question: 'The most important part of any information system:',
-            options: ['Database', 'Hardware', 'Software', 'People'],
-            answer: 3,
-          },
-          {
-            id: 'q5',
-            topicId: 'module1',
-            question:
-              'The largest, fastest, most powerful, and most expensive type of computers:',
-            options: [
-              'Mainframe computer',
-              'Supercomputer',
-              'Microcomputer / Personal computer',
-              'Minicomputer / Midrange computer',
-            ],
-            answer: 1,
-          },
-          {
-            id: 'q6',
-            topicId: 'module1',
-            question:
-              'Although not as powerful as a supercomputer, this type of computer is capable of great processing speeds and data storage:',
-            options: [
-              'Mainframe computer',
-              'Supercomputer',
-              'Microcomputer / Personal computer',
-              'Minicomputer / Midrange computer',
-            ],
-            answer: 0,
-          },
-          {
-            id: 'q7',
-            topicId: 'module1',
-            question:
-              'They can be used for web browsing, watching videos, reading e-books, playing games and more:',
-            options: ['E-readers', 'Hand-held computers', 'Smart phones', 'Game console'],
-            answer: 2,
-          },
-          {
-            id: 'q8',
-            topicId: 'module1',
-            question: "Apple's Watch is what type of computer?",
-            options: ['laptop', 'tablet', 'smartphone', 'wearable'],
-            answer: 3,
-          },
-          {
-            id: 'q9',
-            topicId: 'module2',
-            question: 'The network that connects computers all over the world.',
-            options: ['ARPANET', 'LAN', 'Internet', 'Web'],
-            answer: 2,
-          },
-          {
-            id: 'q10',
-            topicId: 'module2',
-            question: 'The rules for exchanging data between computers.',
-            options: ['Browsers', 'Protocols', 'WWW', 'ISP'],
-            answer: 1,
-          },
-          {
-            id: 'q11',
-            topicId: 'module2',
-            question:
-              'Using file transfer utility software, you can copy files to your computer from specially configured servers on the Internet. This is called:',
-            options: ['downloading', 'blogging', 'filtering', 'uploading'],
-            answer: 0,
-          },
-          {
-            id: 'q12',
-            topicId: 'module2',
-            question: 'The most popular microblogging site:',
-            options: ['LinkedIn', 'Google+', 'Twitter', 'Wikipedia'],
-            answer: 2,
-          },
-          {
-            id: 'q13',
-            topicId: 'module2',
-            question:
-              'Three basic components to cloud computing are clients, Internet, and:',
-            options: ['CSS', 'Streaming', 'Service providers', 'Web 3.0'],
-            answer: 2,
-          },
-          {
-            id: 'q14',
-            topicId: 'module2',
-            question:
-              'Communities of individuals who share a common interest typically create Facebook:',
-            options: ['Groups', 'Clients', 'Pages', 'Profiles'],
-            answer: 0,
-          },
-          {
-            id: 'q15',
-            topicId: 'module2',
-            question:
-              "Type of e-mail account that does not require an e-mail program to be installed on a user's computer is:",
-            options: ['Blog-based', 'Utility-based', 'Client-based', 'Web-based'],
-            answer: 3,
-          },
-          {
-            id: 'q16',
-            topicId: 'module2',
-            question:
-              'The continuing Internet development that allows objects to send and receive data over the Internet.',
-            options: ['HTML', 'IoT', 'Search engines', 'Web 2.0'],
-            answer: 1,
-          },
-          {
-            id: 'q17',
-            topicId: 'module2',
-            question: 'An online diary or commentary.',
-            options: ['bitmap', 'blog', 'HTML', 'vector'],
-            answer: 1,
-          },
-          {
-            id: 'q18',
-            topicId: 'module3',
-            question: 'Also known as an online office suite.',
-            options: ['cloud suite', 'integrated suite', 'business suite', 'utility suite'],
-            answer: 0,
-          },
-          {
-            id: 'q19',
-            topicId: 'module3',
-            question: 'A rectangular area that can contain a document, program, or message.',
-            options: ['dialog box', 'form', 'frame', 'window'],
-            answer: 3,
-          },
-          {
-            id: 'q20',
-            topicId: 'module3',
-            question: 'Programs that create text-based documents.',
-            options: ['DBMS', 'suites', 'spreadsheets', 'word processors'],
-            answer: 3,
-          },
-          {
-            id: 'q21',
-            topicId: 'module3',
-            question:
-              'What type of software works with users, application software, and computer hardware to handle the majority of technical details?',
-            options: ['application', 'Linux', 'desktop', 'system'],
-            answer: 3,
-          },
-          {
-            id: 'q22',
-            topicId: 'module3',
-            question:
-              'The ability to switch between different applications stored in memory is called:',
-            options: ['diversion', 'operational interference', 'multitasking', 'programming'],
-            answer: 2,
-          },
-          {
-            id: 'q23',
-            topicId: 'module3',
-            question:
-              'The programs that convert programming instructions written by programmers into a language that computers understand and process are language:',
-            options: ['converters', 'managers', 'linguists', 'translators'],
-            answer: 0,
-          },
-          {
-            id: 'q24',
-            topicId: 'module3',
-            question: 'BitDefender, and Norton are examples of:',
-            options: ['utility suites', 'application packages', 'operating systems', 'apps'],
-            answer: 0,
-          },
-          {
-            id: 'q25',
-            topicId: 'module4',
-            question:
-              'This container houses most of the electrical components for a computer system.',
-            options: ['chip carrier', 'system unit', 'system board', 'Unicode'],
-            answer: 1,
-          },
-          {
-            id: 'q26',
-            topicId: 'module4',
-            question: 'The mainboard or motherboard is also known as the:',
-            options: ['computer', 'mobile system', 'board processor', 'system board'],
-            answer: 3,
-          },
-          {
-            id: 'q27',
-            topicId: 'module4',
-            question:
-              'In a personal computer system, the central processing unit is typically contained on a single:',
-            options: ['bus', 'Module', 'chip', 'RAM'],
-            answer: 2,
-          },
-          {
-            id: 'q28',
-            topicId: 'module4',
-            question:
-              'This type of memory divides large programs into parts and stores the parts on a secondary storage device.',
-            options: ['virtual', 'direct', 'random-access', 'expanded'],
-            answer: 0,
-          },
-          {
-            id: 'q29',
-            topicId: 'module4',
-            question: 'This provides a pathway to connect parts of the CPU to each other.',
-            options: ['bus', 'Wired', 'cable', 'wireless'],
-            answer: 0,
-          },
-          {
-            id: 'q30',
-            topicId: 'module4',
-            question: 'Computers can only recognize this type of electronic signal.',
-            options: ['analog', 'digital', 'bus', 'maximum'],
-            answer: 1,
-          },
-          {
-            id: 'q31',
-            topicId: 'module4',
-            question: 'Among the input devices:',
-            options: ['Plotter', 'Scanner', 'Monitor', 'Printer'],
-            answer: 1,
-          },
-          {
-            id: 'q32',
-            topicId: 'module4',
-            question: 'The Keyboard standard is:',
-            options: ['QWERTY', 'QWRETY', 'QWARTY', 'QWARTI'],
-            answer: 0,
-          },
-          {
-            id: 'q33',
-            topicId: 'module4',
-            question:
-              '......... keys in the keyboard needed to change the position of the screen cursor',
-            options: ['Function keys', 'Cursor control keys', 'Special-purpose keys', 'Numeric keypad'],
-            answer: 1,
-          },
-          {
-            id: 'q34',
-            topicId: 'module4',
-            question: 'The type of scanner used to scan books',
-            options: ['Flatbed Scanners', 'Sheetfed Scanners', '3D Scanners', 'Portable Scanners'],
-            answer: 0,
-          },
-          {
-            id: 'q35',
-            topicId: 'module4',
-            question: 'The type of scanner used to scan a large stack of papers',
-            options: ['Flatbed Scanners', 'Sheetfed Scanners', '3D Scanners', 'Portable Scanners'],
-            answer: 1,
-          },
-          {
-            id: 'q36',
-            topicId: 'module4',
-            question:
-              'Which of the following is capable of recognizing a pre-specified type of mark by pencil or pen',
-            options: ['Camera', 'Bar code reader', 'OMR Scanners', 'RFID reader'],
-            answer: 2,
-          },
-          {
-            id: 'q37',
-            topicId: 'module1',
-            question:
-              'A computer is a general term that describes any technology that helps to produce, manipulate, store, communicate, and/or disseminate information.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q38',
-            topicId: 'module1',
-            question:
-              'A computer program is a set of instructions given to the computer about what it should do next.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q39',
-            topicId: 'module1',
-            question: 'A network is a communication system connecting two or more computers.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q40',
-            topicId: 'module1',
-            question:
-              'ICT collects & processes data, and stores, analyze, and disseminates information for a specific purpose.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q41',
-            topicId: 'module1',
-            question: 'Minicomputers are the most frequently used computers.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q42',
-            topicId: 'module4',
-            question:
-              'Solid state, unlike hard disks, does not have any moving parts, is more reliable, and requires less power.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q43',
-            topicId: 'module1',
-            question:
-              'Input devices translate the processed information from the computer into a form that humans can understand.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q44',
-            topicId: 'module1',
-            question:
-              'A laptop is a type of computer that is small enough to fit on top of or alongside a desk yet is too big to carry around.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q45',
-            topicId: 'module4',
-            question:
-              'The system unit is the main case of the computer that contains electronic components used to process data.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q46',
-            topicId: 'module4',
-            question: 'The control unit is the main circuit board of the system unit.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q47',
-            topicId: 'module4',
-            question:
-              'The ALU is the component of the processor that directs and coordinates most of the operations in the computer.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q48',
-            topicId: 'module4',
-            question: 'The unit for measuring clock rates is Hertz (Hz).',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q49',
-            topicId: 'module4',
-            question: "A higher CPU clock rate means the computer's better performance.",
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          // Display Technology & Printers
-          {
-            id: 'q50',
-            topicId: 'module4',
-            question: '_______ monitors are thinner, and do not require backlighting',
-            options: ['LCD', 'CRT', 'OLED', 'All of the above'],
-            answer: 2,
-          },
-          {
-            id: 'q51',
-            topicId: 'module4',
-            question: '_______ special purpose printers for maps, and architectural drawings.',
-            options: ['Inkjet printer', 'Plotter', 'Laser printer', '3D printer'],
-            answer: 1,
-          },
-          {
-            id: 'q52',
-            topicId: 'module4',
-            question:
-              'The type of printer that is the fastest, most quiet and with high paper print quality',
-            options: ['Inkjet printer', 'Dot matrix', '3D printer', 'Laser printer'],
-            answer: 3,
-          },
-          {
-            id: 'q53',
-            topicId: 'module4',
-            question: 'The type of printer that is most commonly used for colored printed paper',
-            options: ['Inkjet printer', 'Dot matrix', 'Laser printer', '3D printer'],
-            answer: 0,
-          },
-
-          // Storage Devices
-          {
-            id: 'q54',
-            topicId: 'module4',
-            question: '_______ is ideal for creating permanent archives of family photos.',
-            options: ['CD', 'CD-R', 'CD-RW', 'CD-ROM'],
-            answer: 1,
-          },
-          {
-            id: 'q55',
-            topicId: 'module4',
-            question: 'The type of storage that uses pits and lands to represent 1s and 0s is ......',
-            options: ['cloud', 'hard disk', 'optical', 'solid state'],
-            answer: 2,
-          },
-          {
-            id: 'q56',
-            topicId: 'module4',
-            question: 'USB drives are also known as:',
-            options: ['flash drives', 'ports', 'optical drives', 'universal state bus'],
-            answer: 0,
-          },
-          {
-            id: 'q57',
-            topicId: 'module4',
-            question:
-              'Specialized high-capacity secondary storage devices designed to meet organizational demands.',
-            options: ['CD devices', 'flash drives', 'Platters', 'mass storage devices'],
-            answer: 3,
-          },
-          {
-            id: 'q58',
-            topicId: 'module4',
-            question: "Optical disc most common on today's personal Computers",
-            options: ['DVD', 'network attached storage', 'Solid-state drives', 'Hard disk'],
-            answer: 0,
-          },
-          {
-            id: 'q59',
-            topicId: 'module4',
-            question: 'Concentric rings on a hard-disk platter.',
-            options: ['tracks', 'sectors', 'solid-state drives', 'cylinder'],
-            answer: 0,
-          },
-
-          // Networking & Connectivity
-          {
-            id: 'q60',
-            topicId: 'module2',
-            question:
-              'The concept related to using computer networks to link people and resources.',
-            options: ['Connectivity', 'TCP/IP', 'GPS', 'Wi-Fi'],
-            answer: 0,
-          },
-          {
-            id: 'q61',
-            topicId: 'module4',
-            question:
-              'A high-frequency transmission cable that delivers television signals as well as connects computers in a network.',
-            options: ['Fiber optics', 'coaxial', 'Satellite', 'twisted pair'],
-            answer: 1,
-          },
-          {
-            id: 'q62',
-            topicId: 'module4',
-            question:
-              'A short-range radio communication standard that transmits data over short distances of up to approximately 33 feet, widely used for wireless headsets',
-            options: ['WiMax', 'Wi-Fi', 'Cellular', 'Bluetooth'],
-            answer: 3,
-          },
-          {
-            id: 'q63',
-            topicId: 'module2',
-            question: 'Bus, ring, star, tree, and mesh are five types of network:',
-            options: ['Strategies', 'Protocols', 'Topologies', 'Devices'],
-            answer: 2,
-          },
-
-          // Database Concepts
-          {
-            id: 'q64',
-            topicId: 'module1',
-            question:
-              'The most basic logical data element such as a single letter, number, or special character is known as a(n):',
-            options: ['Character', 'Phrase', 'Element', 'Record'],
-            answer: 0,
-          },
-          {
-            id: 'q65',
-            topicId: 'module1',
-            question: 'Each record in a database has at least one distinctive field, called the:',
-            options: ['View', 'Key Field', 'Table', 'Record'],
-            answer: 1,
-          },
-          {
-            id: 'q66',
-            topicId: 'module1',
-            question: 'The bridge between the logical and physical views of the data is provided by:',
-            options: ['Tables', 'SQL', 'records', 'DBMS'],
-            answer: 3,
-          },
-          {
-            id: 'q67',
-            topicId: 'module1',
-            question:
-              'Highly trained computer specialists who interact with the data administration subsystem are known as:',
-            options: ['DBMS', 'data modelers', 'database administrators', 'relational specialists'],
-            answer: 2,
-          },
-          {
-            id: 'q68',
-            topicId: 'module1',
-            question:
-              'In a network database, each child node may have more than one parent node; this is known as a:',
-            options: [
-              'hierarchy',
-              'parent relationship',
-              'many-to-many relationship',
-              'relational relationship',
-            ],
-            answer: 2,
-          },
-          {
-            id: 'q69',
-            topicId: 'module1',
-            question: 'Connections between parent nodes and child nodes are provided by:',
-            options: ['characters', 'objects', 'DBA', 'pointers'],
-            answer: 3,
-          },
-          {
-            id: 'q70',
-            topicId: 'module1',
-            question:
-              'Object-oriented databases organize data by classes, attributes, methods, and:',
-            options: ['space', 'objects', 'relations', 'time'],
-            answer: 1,
-          },
-
-          // Systems Development Life Cycle
-          {
-            id: 'q71',
-            topicId: 'module3',
-            question: 'What is the first phase in the systems life cycle?',
-            options: [
-              'Preliminary investigation',
-              'Needs analysis',
-              'Systems analysis',
-              'Systems design',
-            ],
-            answer: 0,
-          },
-          {
-            id: 'q72',
-            topicId: 'module3',
-            question: 'Which phase involves installing the new system and training people?',
-            options: [
-              'preliminary investigation',
-              'Systems design',
-              'Systems analysis',
-              'Systems implementation.',
-            ],
-            answer: 3,
-          },
-          {
-            id: 'q73',
-            topicId: 'module3',
-            question:
-              'Which systems analysis tool shows the relationship between input and output documents?',
-            options: [
-              'Automated design tool',
-              'Grid chart',
-              'Data flow diagram',
-              'System flowchart.',
-            ],
-            answer: 1,
-          },
-          {
-            id: 'q74',
-            topicId: 'module3',
-            question:
-              'What type of feasibility evaluates whether the people within the organization will embrace or resist a new system?',
-            options: ['Behavioral', 'Operational', 'Economic', 'Technical'],
-            answer: 1,
-          },
-
-          // Programming Concepts
-          {
-            id: 'q75',
-            topicId: 'module3',
-            question:
-              'The major processing steps identified in a top-down program design are called:',
-            options: ['Assembly', 'Modules', 'Instructions', 'Logic.'],
-            answer: 1,
-          },
-          {
-            id: 'q76',
-            topicId: 'module3',
-            question: 'The programming logic structure in which one program statement follows another.',
-            options: ['Loop', 'Selection', 'Repetition', 'Sequential'],
-            answer: 3,
-          },
-          {
-            id: 'q122',
-            topicId: 'module3',
-            question: 'Which step in the six-step programming procedure involves desk checking and searching for syntax and logic errors?',
-            options: ['Program design', 'Program maintenance', 'Program documentation', 'Program test.'],
-            answer: 3,
-          },
-          {
-            id: 'q123',
-            topicId: 'module3',
-            question: 'Logic structure, also known as IF-THEN-ELSE, that controls program flow based on a decision.',
-            options: ['Sequential structure', 'Selection structure', 'Repetition structure', 'Loop Structure'],
-            answer: 1,
-          },
-          // New questions added from user
-          {
-            id: 'q77',
-            topicId: 'module1',
-            question:
-              "A disadvantage of e-commerce compared to brick-and-mortar stores is that:",
-            options: [
-              'a product purchased online needs to be delivered rather than picked up immediately',
-              'e-commerce sites do not have to restock individual retail spaces',
-              'e-commerce sites can be accessed from anywhere with an Internet connection',
-              'e-commerce sites have the expenses associated with owning or renting retail space',
-            ],
-            answer: 0,
-          },
-          {
-            id: 'q78',
-            topicId: 'module2',
-            question: 'The Internet of Things refers to:',
-            options: [
-              'the collection of all devices that can be researched on the Internet',
-              'the ability of nonconnected products to access the Internet',
-              'the Internet focus on products rather than services',
-              'the network of products embedded with connectivity-enabled electronics',
-            ],
-            answer: 3,
-          },
-          {
-            id: 'q79',
-            topicId: 'module2',
-            question:
-              'Even though e-commerce purchases using this method are faster and more convenient, fraud is a concern for buyers and sellers.',
-            options: ['check', 'credit card', 'cash'],
-            answer: 1,
-          },
-          {
-            id: 'q80',
-            topicId: 'module2',
-            question:
-              'The _____ is the continuing development of the Internet that allows everyday objects embedded with electronic devices to send and receive data over the Internet.',
-            options: ['Web 2.0', 'Internet of Things', 'cloud', 'wireless revolution'],
-            answer: 1,
-          },
-          {
-            id: 'q81',
-            topicId: 'module2',
-            question:
-              '_____ uses the Internet to shift activities from the user\'s computer to computers on the Internet.',
-            options: ['Cloud computing', 'Web computing', 'Internet computing'],
-            answer: 0,
-          },
-          {
-            id: 'q82',
-            topicId: 'module1',
-            question:
-              'Select the advantages e-commerce has over retail stores. (Select all that apply)',
-            options: [
-              'E-commerce sites never close.',
-              'E-commerce sites can be accessed from anywhere with an Internet connection.',
-              'E-commerce sites restock individual retail spaces.',
-              'E-commerce sites do not have the expenses associated with owning or renting retail space.',
-            ],
-            // multiple correct answers: indexes 0,1,3
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q83',
-            topicId: 'module1',
-            question:
-              '_____ commerce involves the sale of a product or service to the general public or end users.',
-            options: ['C2C (Consumer to Consumer)', 'B2C (Business to Consumer)', 'B2B (Business to Business)'],
-            answer: 1,
-          },
-          {
-            id: 'q84',
-            topicId: 'module2',
-            question:
-              'Select questions to ask in evaluating the authority and accuracy of information you find on the web. (Select all that apply)',
-            options: [
-              'Does the information deal with a popular topic?',
-              'Is the information consistent with information found on other reputable sources?',
-              'Is the author an expert in the subject area?',
-            ],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q85',
-            topicId: 'module2',
-            question: 'Select all the appropriate payment options for e-commerce.',
-            options: ['credit card', 'cash', 'digital cash'],
-            answer: [0, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          // Additional questions provided by the user
-          {
-            id: 'q86',
-            topicId: 'module3',
-            question: '_____ suites are stored on a server on the Internet and are available anywhere you can access the Internet.',
-            options: ['Productivity', 'Office', 'Cloud'],
-            answer: 2,
-          },
-          {
-            id: 'q87',
-            topicId: 'module3',
-            question: '_____ is described as designing a web site and creating its content.',
-            options: ['Web authoring', 'Web browsing', 'Internet authoring'],
-            answer: 0,
-          },
-          {
-            id: 'q88',
-            topicId: 'module3',
-            question: 'Select all the types of specialized applications.',
-            options: ['spreadsheet', 'database', 'web authoring', 'word processing', 'graphics', 'presentation'],
-            answer: [2, 4],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q89',
-            topicId: 'module3',
-            question: 'Select all the types of graphics programs.',
-            options: ['video editors', 'desktop publishing programs', 'image editing programs', 'illustration programs', 'web authoring programs'],
-            answer: [1, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q90',
-            topicId: 'module3',
-            question: '_____ suites are stored on a server on the Internet and are available anywhere you can access the Internet. (duplicate)',
-            options: ['Productivity', 'Office', 'Cloud'],
-            answer: 2,
-          },
-          {
-            id: 'q91',
-            topicId: 'module3',
-            question: 'A software _____ is a collection of separate application programs bundled together and made available as a group.',
-            options: ['suite', 'application'],
-            answer: 0,
-          },
-          {
-            id: 'q92',
-            topicId: 'module3',
-            question: '_____ suites are stored on a server on the Internet and are available anywhere you can access the Internet.',
-            options: ['Online office', 'Productivity', 'Office'],
-            answer: 0,
-          },
-          {
-            id: 'q93',
-            topicId: 'module1',
-            question: 'In a database table, the records make up the table rows and the _____ make up the columns.',
-            options: ['primary keys', 'fields', 'tuples'],
-            answer: 1,
-          },
-          {
-            id: 'q94',
-            topicId: 'module1',
-            question: 'In a database, a _____ is an easy way to enter and edit data with a user friendly user interface.',
-            options: ['report', 'form', 'macro', 'query'],
-            answer: 1,
-          },
-          {
-            id: 'q95',
-            topicId: 'module3',
-            question: 'The process of creating a web site would be referred to as _____.',
-            options: ['programming', 'software engineering', 'web authoring'],
-            answer: 2,
-          },
-          {
-            id: 'q96',
-            topicId: 'module1',
-            question: 'Each column in a database table.',
-            options: ['field', 'primary key', 'record'],
-            answer: 0,
-          },
-          {
-            id: 'q97',
-            topicId: 'module3',
-            question: 'A specialized application is one that is used in many different professions. (True/False)',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q98',
-            topicId: 'module1',
-            question: 'This is a collection of related data like an electronic file cabinet.',
-            options: ['Database', 'Document', 'Worksheet', 'Presentation'],
-            answer: 0,
-          },
-          {
-            id: 'q99',
-            topicId: 'module1',
-            question: 'A _____ is a program that sets up a database and provides tools to enter, edit, and retrieve data from a database.',
-            options: ['word processor', 'presentation program', 'spreadsheet', 'database management system'],
-            answer: 3,
-          },
-          {
-            id: 'q100',
-            topicId: 'module1',
-            question: 'In a database table, the _____ field is a unique identifier for each record.',
-            options: ['foreign key', 'primary key'],
-            answer: 1,
-          },
-          {
-            id: 'q101',
-            topicId: 'module1',
-            question: 'In a database, a _____ is used to enter and edit data and may have a paper version that looks similar.',
-            options: ['form', 'record', 'field', 'table'],
-            answer: 0,
-          },
-          {
-            id: 'q102',
-            topicId: 'module1',
-            question: 'In a relational database, a _____ is the most basic structure consisting of records and fields.',
-            options: ['report', 'sheet', 'table', 'form'],
-            answer: 2,
-          },
-          {
-            id: 'q103',
-            topicId: 'module1',
-            question: 'A _____ is a program that structures a database and provides tools to enter, edit, and retrieve data from the database.',
-            options: ['word processor', 'database manager', 'spreadsheet', 'presentation program'],
-            answer: 1,
-          },
-          {
-            id: 'q104',
-            topicId: 'module3',
-            question: 'A _____ would be used to create a budget.',
-            options: ['word processor', 'database management system', 'presentation program', 'spreadsheet'],
-            answer: 3,
-          },
-          {
-            id: 'q105',
-            topicId: 'module1',
-            question: 'In a database table, which field makes each record unique and is used to join one table to a related table.',
-            options: ['Primary key', 'Foreign key'],
-            answer: 0,
-          },
-          {
-            id: 'q106',
-            topicId: 'module3',
-            question: '_____ combine a variety of objects to allow users to create appealing, visually interesting presentations.',
-            options: ['Word processors', 'Database management systems', 'Presentation software', 'Spreadsheets'],
-            answer: 2,
-          },
-          {
-            id: 'q107',
-            topicId: 'module1',
-            question: 'A _____ is a collection of related data.',
-            options: ['presentation', 'document', 'database', 'program'],
-            answer: 2,
-          },
-          {
-            id: 'q108',
-            topicId: 'module3',
-            question: '_____ are used to create memos, letters and faxes.',
-            options: ['Presentation graphics programs', 'Word processors', 'Database management systems', 'Spreadsheets'],
-            answer: 1,
-          },
-          {
-            id: 'q109',
-            topicId: 'module3',
-            question: '_____ organize, analyze, and graph numeric data.',
-            options: ['Database management systems', 'Presentation programs', 'Spreadsheets', 'Word processors'],
-            answer: 2,
-          },
-          {
-            id: 'q110',
-            topicId: 'module3',
-            question: 'Select all the examples of general-purpose application software.',
-            options: ['presentation software', 'image editing', 'spreadsheets', 'database management systems'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q111',
-            topicId: 'module3',
-            question: '_____ are add-on programs for mobile devices, including cell phones and tablets.',
-            options: ['Image editors', 'Mobile apps', 'Relational databases', 'Mobile documents'],
-            answer: 1,
-          },
-          {
-            id: 'q112',
-            topicId: 'module3',
-            question: 'This is an example of a file created in _____.',
-            options: ['Microsoft Access', 'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'],
-            answer: 2,
-          },
-          {
-            id: 'q113',
-            topicId: 'module3',
-            question: 'Select all the common features of application software that works with text documents.',
-            options: ['spell checker', 'pivot tables', 'fonts and font sizes', 'alignment'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q114',
-            topicId: 'module3',
-            question: 'Select all the categories of application software.',
-            options: ['mobile apps', 'specialized', 'general-purpose', 'integrated'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q115',
-            topicId: 'module3',
-            question: '_____ create text-based documents.',
-            options: ['Word processors', 'Spreadsheets', 'Presentation graphics programs', 'Database management systems'],
-            answer: 0,
-          },
-          {
-            id: 'q116',
-            topicId: 'module3',
-            question: 'Most applications use a _____ that displays windows, icons, and menus.',
-            options: ['command prompt', 'GUI', 'CPU'],
-            answer: 1,
-          },
-          {
-            id: 'q117',
-            topicId: 'module3',
-            question: 'Select all the examples of general-purpose application software.',
-            options: ['spreadsheets', 'presentation software', 'desktop publishing', 'word processors'],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q118',
-            topicId: 'module3',
-            question: 'Mobile applications, also called _____ are add-on programs for mobile devices.',
-            options: ['quick response apps', 'mobile apps', 'databases', 'smart apps'],
-            answer: 1,
-          },
-          {
-            id: 'q119',
-            topicId: 'module3',
-            question: 'This is an example of a _____.',
-            options: ['ribbon GUI', 'traditional GUI', 'character-based user interface'],
-            answer: 1,
-          },
-          {
-            id: 'q120',
-            topicId: 'module3',
-            question: 'Which of the following are the common features of application software that make the documents easy?',
-            options: ['Character effects', 'Fonts and font sizes', 'Edit options', 'Filters'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q121',
-            topicId: 'module3',
-            question: 'Application software is divided into three categories: _____ specialized apps, and mobile apps.',
-            options: ['utility apps', 'general-purpose apps', 'system apps'],
-            answer: 1,
-          },
-
-          // Computer Security
-          {
-            id: 'q124',
-            topicId: 'module3',
-            question: 'Attempts to slow down or stop a computer system or network by flooding a computer or network with requests for information and data:',
-            options: ['Identity theft', 'D o S, Denial of service', 'Internet Scam', 'Data Manipulation.'],
-            answer: 1,
-          },
-          {
-            id: 'q125',
-            topicId: 'module3',
-            question: 'Attempts to trick Internet users into thinking a fake but official-looking website or e-mail is legitimate.',
-            options: ['Copyright', 'Virus', 'Worm', 'Phishing'],
-            answer: 3,
-          },
-
-          // General Questions
-          {
-            id: 'q126',
-            topicId: 'module4',
-            question: 'The expansion card that is used to connect a computer to a network.',
-            options: ['network interface', 'converter', 'LAN', 'modem'],
-            answer: 0,
-          },
-          {
-            id: 'q127',
-            topicId: 'module4',
-            question: 'Cables are used to connect exterior devices to the system unit via the ports. One end of the cable is attached to the device, and the other end has a connector that is attached to a matching connector on the port.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q128',
-            topicId: 'module4',
-            question: 'Term used to describe the number of bits that a CPU can access at one time.',
-            options: ['Byte', 'Word', 'Pulse width', 'Character'],
-            answer: 1,
-          },
-          {
-            id: 'q129',
-            topicId: 'module4',
-            question: 'RAM is considered temporary, or volatile, storage.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q130',
-            topicId: 'module3',
-            question: "In most cases, the word 'software' is interchangeable with the word _______.",
-            options: ['program', 'procedure', 'application', 'computer'],
-            answer: 0,
-          },
-          {
-            id: 'q131',
-            topicId: 'module4',
-            question: 'For multicore processors to be used effectively, computers must understand how to divide tasks into parts that can be distributed across each core—an operation called _______.',
-            options: ['multiplexer processing', 'parallel processing', 'graphics coprocessing', 'arithmetic-logic processing'],
-            answer: 1,
-          },
-          {
-            id: 'q132',
-            topicId: 'module1',
-            question: 'The second computer generation used transistors for circuitry.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q133',
-            topicId: 'module1',
-            question: 'Desktop, laptop, and tablet computers, and mobile devices are classified as _______.',
-            options: ['personal computers', 'midrange computers', 'supercomputers', 'mainframe computers'],
-            answer: 0,
-          },
-          {
-            id: 'q134',
-            topicId: 'module3',
-            question: 'The purpose of software is to convert data into information.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q135',
-            topicId: 'module1',
-            question: "The world's first large-scale commercial computer.",
-            options: ['ENIAC', 'Mark1', 'UNIVAC1', 'Apple II'],
-            answer: 2,
-          },
-          {
-            id: 'q136',
-            topicId: 'module1',
-            question: 'In an information system, the rules or guidelines for people to follow are called _______.',
-            options: ['procedures', 'compiling', 'data processing', 'database management'],
-            answer: 0,
-          },
-          {
-            id: 'q137',
-            topicId: 'module1',
-            question: 'The component of an information system that is described as raw unprocessed facts including text, numbers, images, and sounds, is called _______.',
-            options: ['data', 'cloud computing', 'the internet', 'software'],
-            answer: 0,
-          },
-          {
-            id: 'q138',
-            topicId: 'module1',
-            question: 'Smartphones are most widely used _____ computers and designed to fit into the palm of one hand.',
-            options: ['laptop', 'notebook', 'personal', 'midrange'],
-            answer: 2,
-          },
-
-          // Internet & Web Questions
-          {
-            id: 'q139',
-            topicId: 'module2',
-            question: 'Another name for a midrange computer is "server".',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q140',
-            topicId: 'module2',
-            question: 'The Internet and the Web are the same.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q141',
-            topicId: 'module2',
-            question: 'Attachments to e-mail messages can be a document or an image.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q142',
-            topicId: 'module2',
-            question: 'Uploading is the process of copying a file from a website to your computer.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q143',
-            topicId: 'module1',
-            question: 'Which of the following computers is also referred to as a server and is used to support end users for things such as retrieving data from a database or providing access to application software?',
-            options: ['Microcomputer', 'Supercomputer', 'Mainframe', 'Midrange'],
-            answer: 3,
-          },
-          {
-            id: 'q144',
-            topicId: 'module2',
-            question: 'The ________ compares your entry against its database and returns the result, a list of sites on that topic.',
-            options: ['Content Evaluator', 'Wiki', 'Search Engine', 'Spider'],
-            answer: 2,
-          },
-          {
-            id: 'q145',
-            topicId: 'module2',
-            question: "When evaluating a website's content, whether or not the information is up to date is considered part of the ________ element.",
-            options: ['Currency', 'Objectivity', 'Accuracy', 'Authority'],
-            answer: 0,
-          },
-
-          // Ports & Hardware
-          {
-            id: 'q146',
-            topicId: 'module4',
-            question: '________ ports are audiovisual ports typically used to connect large monitors. These ports are used with many Apple Macintosh computers.',
-            options: ['Thunderbolt', 'MiniDP', 'Ethernet', 'FireWire'],
-            answer: 1,
-          },
-          {
-            id: 'q147',
-            topicId: 'module4',
-            question: 'USB ports are used to connect keyboards, mice, printers, storage devices, and a variety of specialty devices.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q148',
-            topicId: 'module4',
-            question: 'Pathways that support communication among the various electronic components on the system board are called ________.',
-            options: ['Bus lines', 'Gateways', 'Network lines', 'Logic paths'],
-            answer: 0,
-          },
-          {
-            id: 'q149',
-            topicId: 'module4',
-            question: 'The number of bits that can travel simultaneously down a bus is known as:',
-            options: ['Digital width', 'Slate distance', 'Byte path', 'Bus width'],
-            answer: 3,
-          },
-
-          // History & Computer Types
-          {
-            id: 'q150',
-            topicId: 'module1',
-            question: 'A microcomputer that is smaller, lighter, and less powerful than a notebook, and which has a touch sensitive screen, is called a ________.',
-            options: ['Desktop', 'Subnotebook', 'Tablet', 'Laptop'],
-            answer: 2,
-          },
-          {
-            id: 'q151',
-            topicId: 'module1',
-            question: 'The first fully programmable electronic computer was ___________.',
-            options: ['Z1', 'Mark1', 'Colossus', 'Enigma'],
-            answer: 2,
-          },
-
-          // System Components
-          {
-            id: 'q152',
-            topicId: 'module4',
-            question: 'In most personal computer systems, the CPU is contained on a single chip called the ________.',
-            options: ['Semiconductor', 'Control unit', 'ALU', 'Microprocessor'],
-            answer: 3,
-          },
-          {
-            id: 'q153',
-            topicId: 'module4',
-            question: 'The ALU tells the rest of the computer system how to carry out a program\'s instructions.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q154',
-            topicId: 'module4',
-            question: 'These memory chips have information stored in them that cannot be changed by user:',
-            options: ['Flash', 'Card', 'RAM', 'ROM'],
-            answer: 3,
-          },
-
-          // Information Systems
-          {
-            id: 'q155',
-            topicId: 'module1',
-            question: 'The parts of an information system are: people, procedures, software, hardware, data, and the Internet.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q156',
-            topicId: 'module1',
-            question: 'The equipment that processes data in order to create information is called the ___________.',
-            options: ['Software', 'Hardware', 'Typology', 'Compiler'],
-            answer: 1,
-          },
-          {
-            id: 'q157',
-            topicId: 'module1',
-            question: 'A(n) ___________ is a communications system connecting two or more computers.',
-            options: ['Cloud', 'Systems unit', 'Operating system', 'Network'],
-            answer: 3,
-          },
-
-          // Components & System Unit
-          {
-            id: 'q158',
-            topicId: 'module4',
-            question: 'The system board is also known as the:',
-            options: ['expansion slot', 'motherboard', 'expansion card', 'bus'],
-            answer: 1,
-          },
-          {
-            id: 'q159',
-            topicId: 'module4',
-            question: 'This character encoding scheme allows non-English characters and special characters to be represented:',
-            options: ['ASCII', 'Unicode', 'EBCDIC', 'ANSIC'],
-            answer: 1,
-          },
-          {
-            id: 'q160',
-            topicId: 'module4',
-            question: 'Frequently accessed information is held in:',
-            options: ['the hard drive', 'cache memory', 'flash memory', 'read only memory'],
-            answer: 1,
-          },
-          {
-            id: 'q161',
-            topicId: 'module4',
-            question: 'FireWire ports are used to connect keyboards, mice, printers, and storage devices.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q162',
-            topicId: 'module4',
-            question: 'Laptops typically use ______ that are typically located outside the system unit.',
-            options: ['AC adapters', 'batteries', 'power supply units', 'MiniDC'],
-            answer: 0,
-          },
-
-          // OS & Software
-          {
-            id: 'q163',
-            topicId: 'module3',
-            question: 'This type of embedded operating system is used by cell phones.',
-            options: ['Stand-alone', 'Desktop', 'Mobile', 'Network'],
-            answer: 2,
-          },
-          {
-            id: 'q164',
-            topicId: 'module3',
-            question: 'Operating systems allow users to interact with application programs and computer hardware through a:',
-            options: ['dialog', 'menu', 'system', 'user interface'],
-            answer: 3,
-          },
-          {
-            id: 'q165',
-            topicId: 'module3',
-            question: 'Troubleshooting or ________ programs recognize and correct problems.',
-            options: ['virtualization', 'virtual assistant', 'diagnostic', 'backup'],
-            answer: 2,
-          },
-          {
-            id: 'q166',
-            topicId: 'module3',
-            question: 'System software is a single program.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q167',
-            topicId: 'module3',
-            question: 'Microsoft Windows 10 has the virtual assistant:',
-            options: ['Cortana', 'Google Assistant', 'Alexa', 'Siri'],
-            answer: 0,
-          },
-
-          // Computers & Hardware
-          {
-            id: 'q168',
-            topicId: 'module4',
-            question: 'Laptops and tablets use this type of adapter, which plugs into a standard wall outlet to provide power to drive the system unit component and recharge batteries.',
-            options: ['DC', 'AC', 'HDMI', 'VGA'],
-            answer: 1,
-          },
-
-          // Output Devices & Input
-          {
-            id: 'q169',
-            topicId: 'module4',
-            question: 'Multitouch screens allow for interaction such as rotating graphical objects on the screen with your hand.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q170',
-            topicId: 'module4',
-            question: 'This penlike device is typically used with tablets and mobile devices.',
-            options: ['Mechanical pencil', 'Game controller', 'Multitouch device', 'Stylus'],
-            answer: 3,
-          },
-          {
-            id: 'q171',
-            topicId: 'module4',
-            question: 'A dedicated, mobile device for storing and displaying e-books and other electronic media including electronic newspapers and magazines.',
-            options: ['E-book reader', 'Interactive whiteboard', 'Flat panel monitor', 'HDTV'],
-            answer: 0,
-          },
-          {
-            id: 'q172',
-            topicId: 'module4',
-            question: 'Output devices are any hardware used to provide or to create output.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q173',
-            topicId: 'module4',
-            question: 'Robots use cameras, microphones, and other sensors as inputs; outputs can be as complex as exploring damaged nuclear reactors to as simple as taking a photo.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-
-          // Software & Operating Systems
-          {
-            id: 'q174',
-            topicId: 'module3',
-            question: 'Utilities and operating systems are a collection of programs considered as:',
-            options: ['browsers', 'system software', 'application software'],
-            answer: 1,
-          },
-          {
-            id: 'q175',
-            topicId: 'module3',
-            question: 'Which of the following are types of application software?',
-            options: ['Mobile apps', 'Specialized applications', 'General purpose applications', 'Operating systems'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q176',
-            topicId: 'module3',
-            question: '________ software works in the background to help the computer manage its own internal resources.',
-            options: ['Application', 'System', 'Device driver'],
-            answer: 1,
-          },
-          {
-            id: 'q177',
-            topicId: 'module3',
-            question: 'Software designed to perform functions and tasks to benefit the end-user might be described as ________ software.',
-            options: ['application', 'system', 'specialized'],
-            answer: 0,
-          },
-          {
-            id: 'q178',
-            topicId: 'module3',
-            question: 'Application and ________ software are the two major kinds of software.',
-            options: ['program', 'operating', 'utility', 'system'],
-            answer: 3,
-          },
-          {
-            id: 'q179',
-            topicId: 'module3',
-            question: '________ programs perform specific tasks related to managing computer resources.',
-            options: ['Utility', 'Application', 'Resource'],
-            answer: 0,
-          },
-          {
-            id: 'q180',
-            topicId: 'module3',
-            question: '________ are step-by-step instructions that tell the computer how to convert data into information.',
-            options: ['Hardware', 'Software', 'Data'],
-            answer: 1,
-          },
-          {
-            id: 'q181',
-            topicId: 'module3',
-            question: 'The difference between general-purpose application software and specialized application software is that ________ application software is widely used in nearly all career areas.',
-            options: ['general-purpose', 'specialized'],
-            answer: 0,
-          },
-          {
-            id: 'q182',
-            topicId: 'module3',
-            question: '________ are small programs primarily designed for mobile devices, such as smartphones and for tablet computers.',
-            options: ['Specialized applications', 'Mobile apps', 'General-purpose applications'],
-            answer: 1,
-          },
-
-          // Computers Types & Hardware
-          {
-            id: 'q183',
-            topicId: 'module1',
-            question: 'Select the type of computer that would most likely be used by a large insurance company to process information about its millions of policy holders?',
-            options: ['Personal computer', 'Mainframe computer', 'Midrange computer'],
-            answer: 1,
-          },
-          {
-            id: 'q184',
-            topicId: 'module1',
-            question: 'Although not nearly as powerful as supercomputers, ________ are capable of great processing speeds and data storage.',
-            options: ['mainframes', 'desktops', 'netbooks'],
-            answer: 0,
-          },
-          {
-            id: 'q185',
-            topicId: 'module1',
-            question: '________, also known as servers, are most widely used to support end users for such specific needs as retrieving data from a database or supplying access to application software.',
-            options: ['Midrange computers', 'Supercomputers', 'Personal computers', 'Mainframe computers'],
-            answer: 0,
-          },
-          {
-            id: 'q186',
-            topicId: 'module1',
-            question: 'The most powerful type of computer is the:',
-            options: ['supercomputer', 'midrange computer', 'mainframe computer', 'personal computer'],
-            answer: 0,
-          },
-          {
-            id: 'q187',
-            topicId: 'module1',
-            question: 'Select the four main types of computers:',
-            options: ['personal', 'mainframe', 'supercomputers', 'microprocessor', 'midrange'],
-            answer: [0, 1, 2, 4],
-            multiple: true,
-            answersRequired: 4,
-          },
-          {
-            id: 'q188',
-            topicId: 'module1',
-            question: 'All of the following are types of personal computers except:',
-            options: ['server', 'tablet', 'desktop', 'laptop', 'wearable'],
-            answer: 0,
-          },
-          {
-            id: 'q189',
-            topicId: 'module4',
-            question: 'Select the four basic categories of personal computer hardware.',
-            options: ['system unit', 'applications', 'secondary storage', 'communication', 'input/output'],
-            answer: [0, 2, 3, 4],
-            multiple: true,
-            answersRequired: 4,
-          },
-          {
-            id: 'q190',
-            topicId: 'module4',
-            question: 'The ________ is the hardware that converts data into information.',
-            options: ['monitor', 'printer', 'random-access memory', 'microprocessor'],
-            answer: 3,
-          },
-          {
-            id: 'q191',
-            topicId: 'module4',
-            question: 'This is an example of:',
-            options: ['secondary storage', 'RAM', 'primary storage', 'optical storage'],
-            answer: 0,
-          },
-
-          // Memory, Storage & Input/Output
-          {
-            id: 'q192',
-            topicId: 'module4',
-            question: 'While you are working on a document that you haven\'t saved yet, it is temporarily held in the computer:',
-            options: ['memory', 'secondary storage', 'hard disk', 'monitor'],
-            answer: 0,
-          },
-          {
-            id: 'q193',
-            topicId: 'module4',
-            question: 'RAM is a type of:',
-            options: ['CPU', 'microprocessor', 'hard disk', 'memory'],
-            answer: 3,
-          },
-          {
-            id: 'q194',
-            topicId: 'module4',
-            question: '________ is a temporary holding area for data, instructions, and information.',
-            options: ['Secondary storage', 'Solid state storage', 'Memory'],
-            answer: 2,
-          },
-          {
-            id: 'q195',
-            topicId: 'module4',
-            question: 'The keyboard and mouse are considered as ________ devices.',
-            options: ['storage', 'output', 'input', 'solid-state'],
-            answer: 2,
-          },
-          {
-            id: 'q196',
-            topicId: 'module4',
-            question: 'Select all the examples of input devices:',
-            options: ['Arithmetic Logic Unit', 'Keyboard', 'Mouse', 'ROM'],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q197',
-            topicId: 'module4',
-            question: 'A ________ is an example of an output device.',
-            options: ['mouse', 'display', 'hard disk', 'scanner'],
-            answer: 1,
-          },
-          {
-            id: 'q198',
-            topicId: 'module4',
-            question: '________ are typically used to store programs and very large data files.',
-            options: ['USB drives', 'RAM', 'Hard disks'],
-            answer: 2,
-          },
-          {
-            id: 'q199',
-            topicId: 'module4',
-            question: 'Solid state storage is more reliable and requires less power than a hard disk.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q200',
-            topicId: 'module4',
-            question: 'Which of the following use laser technology to store data and programs?',
-            options: ['Solid state storage devices', 'Hard disks', 'Optical discs'],
-            answer: 2,
-          },
-
-          // Data, Information & Files
-          {
-            id: 'q201',
-            topicId: 'module1',
-            question: 'Raw, unprocessed facts, including text, numbers, images, and sounds are called:',
-            options: ['data', 'information'],
-            answer: 0,
-          },
-          {
-            id: 'q202',
-            topicId: 'module1',
-            question: 'Processed data becomes information.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-          {
-            id: 'q203',
-            topicId: 'module1',
-            question: 'Presentation, Database, Worksheet, and Document are all examples of:',
-            options: ['storage', 'data', 'files'],
-            answer: 2,
-          },
-          {
-            id: 'q204',
-            topicId: 'module3',
-            question: '________ files contain audience handouts, speaker notes, and electronic slides.',
-            options: ['Worksheet', 'Database', 'Document', 'Presentation'],
-            answer: 3,
-          },
-          {
-            id: 'q205',
-            topicId: 'module1',
-            question: 'Which of the following statements are true about computers?',
-            options: ['They can follow instructions.', 'They accept output but not input.', 'They produce information.', 'They are electronic devices.'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-
-          // Networks, Internet & IoT
-          {
-            id: 'q206',
-            topicId: 'module2',
-            question: '________ is the capability of your microcomputer to share information with other computers on a network.',
-            options: ['Connectivity', 'Popularity', 'Productivity'],
-            answer: 0,
-          },
-          {
-            id: 'q207',
-            topicId: 'module2',
-            question: 'The largest network in the world is the:',
-            options: ['Intranet', 'Extranet', 'Internet'],
-            answer: 2,
-          },
-          {
-            id: 'q208',
-            topicId: 'module2',
-            question: 'The web provides a multimedia interface to the numerous resources available on the:',
-            options: ['cloud', 'Internet', 'network'],
-            answer: 1,
-          },
-          {
-            id: 'q209',
-            topicId: 'module4',
-            question: 'In order for a personal computer to communicate with other computers it uses ________ devices.',
-            options: ['communication', 'input', 'secondary storage', 'output'],
-            answer: 0,
-          },
-          {
-            id: 'q210',
-            topicId: 'module2',
-            question: 'The ____________ is a network of devices embedded with electronics that enables everyday objects to connect and exchange data.',
-            options: ['local area network', 'Internet of Things', 'cloud'],
-            answer: 1,
-          },
-          {
-            id: 'q211',
-            topicId: 'module2',
-            question: 'The ________ is the ongoing development of the Internet that enables computing devices embedded in everyday objects to send and receive data.',
-            options: ['cloud', 'wireless revolution', 'Internet of Things'],
-            answer: 2,
-          },
-
-          // Information Systems (IS)
-          {
-            id: 'q212',
-            topicId: 'module1',
-            question: 'Select all the parts of an information system:',
-            options: ['Hardware', 'Smartphones', 'Data', 'People', 'Software', 'Procedures'],
-            answer: [0, 2, 3, 4, 5],
-            multiple: true,
-            answersRequired: 5,
-          },
-          {
-            id: 'q213',
-            topicId: 'module1',
-            question: '________ is/are the most important part of an information system.',
-            options: ['Data', 'Connectivity', 'Procedures', 'Hardware', 'People', 'Software'],
-            answer: 4,
-          },
-          {
-            id: 'q214',
-            topicId: 'module1',
-            question: 'Which of the following is not a required part of an information system?',
-            options: ['Software', 'Cloud computing', 'Procedures', 'Data', 'People', 'Hardware'],
-            answer: 1,
-          },
-
-          // Additional Software Questions
-          {
-            id: 'q215',
-            topicId: 'module3',
-            question: 'What is another name for software?',
-            options: ['equipment', 'data', 'programs'],
-            answer: 2,
-          },
-          {
-            id: 'q216',
-            topicId: 'module3',
-            question: 'Select all the categories of system software.',
-            options: ['specialized applications', 'utilities', 'basic applications', 'operating systems'],
-            answer: [1, 3],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q217',
-            topicId: 'module3',
-            question: 'A _______ would be the best software application to create a monthly budget.',
-            options: ['presentation software application', 'word processor', 'database management system', 'spreadsheet'],
-            answer: 3,
-          },
-          {
-            id: 'q218',
-            topicId: 'module3',
-            question: 'Which of the following is an example of specialized application?',
-            options: ['a browser', 'a web authoring program', 'a spreadsheet program', 'a word processor'],
-            answer: 1,
-          },
-          {
-            id: 'q219',
-            topicId: 'module3',
-            question: 'Specialized applications are more narrowly focused on specific disciplines and occupations.',
-            options: ['True', 'False'],
-            answer: 0,
-          },
-
-          // Additional Computer Types Questions
-          {
-            id: 'q220',
-            topicId: 'module1',
-            question: '_______ are the most powerful type of computers and are used to process massive amounts of data.',
-            options: ['Mainframes', 'Servers', 'Supercomputers', 'PCs'],
-            answer: 2,
-          },
-          {
-            id: 'q221',
-            topicId: 'module1',
-            question: 'Desktops, laptops, tablets, smartphones and wearables are all examples of _______.',
-            options: ['supercomputers', 'mainframe computers', 'personal computers', 'midrange computers'],
-            answer: 2,
-          },
-          {
-            id: 'q222',
-            topicId: 'module1',
-            question: 'Select all the types of personal computers.',
-            options: ['laptop', 'mobile device', 'desktop', 'tablet'],
-            answer: [0, 1, 2, 3],
-            multiple: true,
-            answersRequired: 4,
-          },
-
-          // Additional Hardware Questions
-          {
-            id: 'q223',
-            topicId: 'module4',
-            question: '_______ are electronic devices that can follow instructions to accept input, process that input, and produce information.',
-            options: ['Printers', 'Web Pages', 'Monitors', 'Computers'],
-            answer: 3,
-          },
-
-          // Additional Operating Systems Questions
-          {
-            id: 'q224',
-            topicId: 'module3',
-            question: 'Which of the following is the most popular type of mobile app?',
-            options: ['Social networking', 'Word processing', 'Banking', 'Shopping'],
-            answer: 0,
-          },
-
-          // Internet Access & Connectivity
-          {
-            id: 'q225',
-            topicId: 'module2',
-            question: 'The most common way to access the Internet is through a(n) ________.',
-            options: ['Web service provider', 'Internet connection expert', 'Internet service provider'],
-            answer: 2,
-          },
-          {
-            id: 'q226',
-            topicId: 'module2',
-            question: 'Identify the connection technologies that allow users to connect to ISPs.',
-            options: ['Word processors', 'Digital subscriber line', 'Wireless modems'],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q227',
-            topicId: 'module2',
-            question: 'Which of the following is a physical network made up of wires, cables, and rules for exchanging information between computers connected to the network?',
-            options: ['Email communication', 'The Internet', 'The World Wide Web', 'Search engines'],
-            answer: 1,
-          },
-          {
-            id: 'q228',
-            topicId: 'module2',
-            question: 'The Web is the physical network of wires, cables, satellites, and rules for exchanging information.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q229',
-            topicId: 'module2',
-            question: 'Select the most common uses of the Internet.',
-            options: ['searching', 'education', 'entertainment', 'shopping', 'voting', 'communicating'],
-            answer: [0, 1, 2, 3, 5],
-            multiple: true,
-            answersRequired: 5,
-          },
-
-          // Web Browsing & Searching
-          {
-            id: 'q230',
-            topicId: 'module2',
-            question: 'The first part of a URL is the ________ used to connect to the resource.',
-            options: ['domain name', 'protocol', 'top-level domain'],
-            answer: 1,
-          },
-          {
-            id: 'q231',
-            topicId: 'module2',
-            question: 'In a URL, the ________ identifies the type of organization.',
-            options: ['protocol', 'first-level prefix', 'top-level domain'],
-            answer: 2,
-          },
-          {
-            id: 'q232',
-            topicId: 'module2',
-            question: 'The ________ is the specific address where the web page is located.',
-            options: ['domain', 'top-level domain', 'protocol'],
-            answer: 0,
-          },
-          {
-            id: 'q233',
-            topicId: 'module2',
-            question: 'These are all examples of ________: .com (Commercial), .edu (Educational), .gov (Government), .mil (U.S. military), .net (Network), .org (Organization).',
-            options: ['protocols', 'domain names', 'top-level domains'],
-            answer: 2,
-          },
-          {
-            id: 'q234',
-            topicId: 'module2',
-            question: 'On the web, a ________ connects documents or pages to each other.',
-            options: ['domain', 'hyperlink', 'page'],
-            answer: 1,
-          },
-          {
-            id: 'q235',
-            topicId: 'module2',
-            question: '________ is the standard markup language for creating web pages.',
-            options: ['CSS', 'HTML', 'PHP'],
-            answer: 1,
-          },
-          {
-            id: 'q236',
-            topicId: 'module2',
-            question: '________ software provides an uncomplicated interface to the Internet and web documents.',
-            options: ['Provider', 'Hyperlink', 'Browser'],
-            answer: 2,
-          },
-          {
-            id: 'q237',
-            topicId: 'module2',
-            question: 'To use a search engine to locate specific information, it is best to enter a ________ or phrase reflecting the information you want.',
-            options: ['paragraph', 'keyword'],
-            answer: 1,
-          },
-          {
-            id: 'q238',
-            topicId: 'module2',
-            question: 'Identify all possible search engines.',
-            options: ['Google', 'ARPANET', 'Yahoo', 'Bing'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q239',
-            topicId: 'module2',
-            question: 'Because search services maintain databases, the search results returned by one search engine will be exactly the same results returned by another search engine.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q240',
-            topicId: 'module2',
-            question: 'Any information that you find on web sites has been subjected to strict guidelines to ensure accuracy.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-          {
-            id: 'q241',
-            topicId: 'module2',
-            question: 'All information on the web is reliable.',
-            options: ['True', 'False'],
-            answer: 1,
-          },
-
-          // Communication & Messaging
-          {
-            id: 'q242',
-            topicId: 'module2',
-            question: 'Select the two best known electronic messaging systems.',
-            options: ['write messaging', 'text messaging', 'instant messaging'],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q243',
-            topicId: 'module2',
-            question: 'Direct, live communication with people online is called ________ messaging.',
-            options: ['prompt', 'instant', 'e-mail', 'immediate'],
-            answer: 1,
-          },
-          {
-            id: 'q244',
-            topicId: 'module2',
-            question: 'Which of the following are popular ways to communicate on cell phones, where messages are short and informal, and instantaneous responses are the standard?',
-            options: ['Text messaging', 'Instant messaging', 'Email'],
-            answer: [0, 1],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'q245',
-            topicId: 'module2',
-            question: '________ messaging is also known as SMS.',
-            options: ['Text', 'Email', 'Instant'],
-            answer: 0,
-          },
-          {
-            id: 'q246',
-            topicId: 'module2',
-            question: '________ messaging is the process of sending a short electronic message, using a wireless network to another person, who views the message on a mobile device.',
-            options: ['Text', 'FTP', 'Plug-in'],
-            answer: 0,
-          },
-          {
-            id: 'q247',
-            topicId: 'module2',
-            question: 'A variation of SMS that allows you to send images, video, and sound.',
-            options: ['Web Based Messaging', 'Client Based Messaging', 'Multimedia Messaging Service'],
-            answer: 2,
-          },
-          {
-            id: 'q248',
-            topicId: 'module2',
-            question: 'MMS is needed for transmitting which of the following in a message?',
-            options: ['Video', 'Sound', 'Images', 'Text'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q249',
-            topicId: 'module2',
-            question: 'A typical ________ has four basic elements: header, message, signature, and attachment.',
-            options: ['instant', 'text', 'e-mail'],
-            answer: 2,
-          },
-          {
-            id: 'q250',
-            topicId: 'module2',
-            question: 'E-mail addresses have two basic parts, the user\'s name and the ________ name, which includes the top-level domain.',
-            options: ['domain', 'extension'],
-            answer: 0,
-          },
-
-          // Social Media & Content
-          {
-            id: 'q251',
-            topicId: 'module2',
-            question: 'A ________ publishes long stories in contrast to short sentences that take only a few seconds to write.',
-            options: ['tweet', 'microblog', 'wiki', 'blog'],
-            answer: 3,
-          },
-          {
-            id: 'q252',
-            topicId: 'module2',
-            question: '________ is an example of a microblog.',
-            options: ['Blogger', 'LinkedIn', 'WordPress', 'X'],
-            answer: 3,
-          },
-          {
-            id: 'q253',
-            topicId: 'module2',
-            question: 'Which of the following are used to broadcast audio content, such as news or comedy programs, over the Internet?',
-            options: ['Search engines', 'Wikis', 'Blogs', 'Podcasts'],
-            answer: 3,
-          },
-          {
-            id: 'q254',
-            topicId: 'module2',
-            question: 'Podcasts are designed to broadcast ________ content over the Internet.',
-            options: ['video', 'photos', 'audio', 'blogs'],
-            answer: 2,
-          },
-          {
-            id: 'q255',
-            topicId: 'module2',
-            question: 'The sites in this image (Facebook, Google+, LinkedIn, Instagram, Pinterest, Tumblr, Vine) are examples of ________.',
-            options: ['browsers', 'social networking', 'web utilities'],
-            answer: 1,
-          },
-          {
-            id: 'q256',
-            topicId: 'module2',
-            question: 'Some sites promote fake news including manipulated videos known as ________ where an individual\'s appearance or message is changed.',
-            options: ['deceptions', 'real fakes', 'morphisms', 'deep fakes'],
-            answer: 3,
-          },
-          {
-            id: 'q257',
-            topicId: 'module2',
-            question: 'Which of the following have made deep fakes easier to produce and therefore more common and dangerous?',
-            options: ['Advances in artificial intelligence', 'A revision of national copyright laws', 'Improvements in image manipulation', 'The termination of federal regulations banning deep fakes'],
-            answer: [0, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-
-          // E-Commerce & Digital Payments
-          {
-            id: 'q258',
-            topicId: 'module2',
-            question: '________ is the general term to describe the buying and selling of goods on the Internet.',
-            options: ['E-trade', 'eBay', 'E-commerce'],
-            answer: 2,
-          },
-          {
-            id: 'q259',
-            topicId: 'module2',
-            question: 'Select all the choices that are typical characteristics of e-commerce.',
-            options: ['Sellers can eliminate the costs of owning a retail outlet.', 'Goods can be purchased anytime of the day or night.', 'Shoppers have immediate access to physical goods that they purchase.', 'Products are shipped directly from the warehouse to the consumer.'],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q260',
-            topicId: 'module2',
-            question: 'The greatest challenge for e-commerce is the development of fast, ________ and reliable payment methods.',
-            options: ['easy', 'quick', 'secure'],
-            answer: 2,
-          },
-          {
-            id: 'q261',
-            topicId: 'module2',
-            question: 'Select all the common B2C applications.',
-            options: ['financial trading', 'online banking', 'shopping', 'person-to-person auction sites'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q262',
-            topicId: 'module2',
-            question: 'The Internet\'s equivalent to traditional cash is ________.',
-            options: ['credit cards', 'barter', 'digital currency', 'checks'],
-            answer: 2,
-          },
-          {
-            id: 'q263',
-            topicId: 'module2',
-            question: 'Venmo and PayPal are examples of ________.',
-            options: ['internet security suites', 'digital cash providers', 'cloud computing', 'auction sites'],
-            answer: 1,
-          },
-          {
-            id: 'q264',
-            topicId: 'module2',
-            question: 'The public ledger used to record all bitcoin transactions is called the ________.',
-            options: ['coinbase', 'balance sheet', 'blockchain', 'cryptocurrency'],
-            answer: 2,
-          },
-          {
-            id: 'q265',
-            topicId: 'module2',
-            question: 'The sites in this image (Amazon pay, Google Wallet, Venmo, PayPal) are examples of ________.',
-            options: ['specialized search engines', 'web utilities', 'digital cash providers'],
-            answer: 2,
-          },
-
-          // Cloud Computing & File Transfer
-          {
-            id: 'q266',
-            topicId: 'module2',
-            question: '________ frees users from owning, maintaining, and storing software and data.',
-            options: ['Internet computing', 'Web computing', 'Desktop applications', 'Cloud computing'],
-            answer: 3,
-          },
-          {
-            id: 'q267',
-            topicId: 'module2',
-            question: 'Select all the basic components of cloud computing.',
-            options: ['Clients', 'Network', 'Solid-state storage', 'Service providers'],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q268',
-            topicId: 'module2',
-            question: 'The speed and reliability of the user\'s access to the Internet is one component that determines the efficiency of ________ computing.',
-            options: ['cloud', 'desktop', 'client'],
-            answer: 0,
-          },
-          {
-            id: 'q269',
-            topicId: 'module2',
-            question: 'Select all the factors determining the efficiency of cloud computing in comparison to offline computing.',
-            options: ['reliability of the user\'s access to the Internet', 'the resolution of the computer monitor', 'reliable transmission of data and programs', 'speed of the user\'s access to the Internet'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q270',
-            topicId: 'module2',
-            question: 'Using ________ utility software, you can copy files to your computer from specially configured servers.',
-            options: ['file transfer', 'filter', 'internet security'],
-            answer: 0,
-          },
-          {
-            id: 'q271',
-            topicId: 'module2',
-            question: 'Microsoft\'s OneDrive is an example of a(n) ________ file transfer service for uploading and downloading files.',
-            options: ['BitTorrent', 'web-based', 'filter', 'FTP'],
-            answer: 1,
-          },
-          {
-            id: 'q272',
-            topicId: 'module2',
-            question: 'Select all the examples of types of file transfer.',
-            options: ['consumer-to-consumer', 'BitTorrent', 'Web-based file transfer service', 'JavaScript', 'FTP'],
-            answer: [1, 2, 4],
-            multiple: true,
-            answersRequired: 3,
-          },
-
-          // Security & Utilities
-          {
-            id: 'q273',
-            topicId: 'module2',
-            question: 'Select all the examples of Web utilities.',
-            options: ['cloud computing', 'file transfer utilities', 'Internet security suites', 'filters'],
-            answer: [1, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'q274',
-            topicId: 'module2',
-            question: '________ suites provide a collection of utility programs designed to protect users against computer viruses and other threats, especially while they are online.',
-            options: ['Office', 'Productivity', 'Security', 'Cloud'],
-            answer: 2,
-          },
-          {
-            id: 'q275',
-            topicId: 'module2',
-            question: 'A parent or organization would use this to block web sites and set time limits.',
-            options: ['File transfer utility', 'Filter', 'Internet security suite'],
-            answer: 1,
-          },
-
-          // Internet Access & Connectivity
-          {
-            id: 'web1',
-            topicId: 'module2',
-            question: 'The most common way to access the Internet is through a(n) ________.',
-            options: ['Web service provider', 'Internet connection expert', 'Internet service provider'],
-            answer: 2,
-          },
-          {
-            id: 'web2',
-            topicId: 'module2',
-            question: 'Identify the connection technologies that allow users to connect to ISPs.',
-            options: ['Word processors', 'Digital subscriber line', 'Wireless modems'],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'web3',
-            topicId: 'module2',
-            question: 'Which of the following is a physical network made up of wires, cables, and rules for exchanging information between computers connected to the network?',
-            options: ['Email communication', 'The Internet', 'The World Wide Web', 'Search engines'],
-            answer: 1,
-          },
-          {
-            id: 'web4',
-            topicId: 'module2',
-            question: 'The Web is the physical network of wires, cables, satellites, and rules for exchanging information.',
-            options: ['True', 'False'],
-            answer: 1,
-            explanation: 'The Internet is the physical network. The Web is the multimedia interface.',
-          },
-          {
-            id: 'web5',
-            topicId: 'module2',
-            question: 'Select the most common uses of the Internet.',
-            options: ['searching', 'education', 'entertainment', 'shopping', 'voting', 'communicating'],
-            answer: [0, 1, 2, 3, 5],
-            multiple: true,
-            answersRequired: 5,
-          },
-
-          // Web Browsing & Searching
-          {
-            id: 'web6',
-            topicId: 'module2',
-            question: 'The first part of a URL is the ________ used to connect to the resource.',
-            options: ['domain name', 'protocol', 'top-level domain'],
-            answer: 1,
-          },
-          {
-            id: 'web7',
-            topicId: 'module2',
-            question: 'In a URL, the ________ identifies the type of organization.',
-            options: ['protocol', 'first-level prefix', 'top-level domain'],
-            answer: 2,
-          },
-          {
-            id: 'web8',
-            topicId: 'module2',
-            question: 'The ________ is the specific address where the web page is located.',
-            options: ['domain', 'top-level domain', 'protocol'],
-            answer: 0,
-          },
-          {
-            id: 'web9',
-            topicId: 'module2',
-            question: 'These are all examples of ________: .com (Commercial), .edu (Educational), .gov (Government), .mil (U.S. military), .net (Network), .org (Organization).',
-            options: ['protocols', 'domain names', 'top-level domains'],
-            answer: 2,
-          },
-          {
-            id: 'web10',
-            topicId: 'module2',
-            question: 'On the web, a ________ connects documents or pages to each other.',
-            options: ['domain', 'hyperlink', 'page'],
-            answer: 1,
-          },
-          {
-            id: 'web11',
-            topicId: 'module2',
-            question: '________ is the standard markup language for creating web pages.',
-            options: ['CSS', 'HTML', 'PHP'],
-            answer: 1,
-          },
-          {
-            id: 'web12',
-            topicId: 'module2',
-            question: '________ software provides an uncomplicated interface to the Internet and web documents.',
-            options: ['Provider', 'Hyperlink', 'Browser'],
-            answer: 2,
-          },
-          {
-            id: 'web13',
-            topicId: 'module2',
-            question: 'To use a search engine to locate specific information, it is best to enter a ________ or phrase reflecting the information you want.',
-            options: ['paragraph', 'keyword', 'sentence'],
-            answer: 1,
-          },
-          {
-            id: 'web14',
-            topicId: 'module2',
-            question: 'Bing, Google, and Yahoo are all examples of ________ that assist you in locating information on the web.',
-            options: ['web directories', 'browsers', 'search engines'],
-            answer: 2,
-          },
-          {
-            id: 'web15',
-            topicId: 'module2',
-            question: 'Identify all possible search engines.',
-            options: ['Google', 'ARPANET', 'Yahoo', 'Bing'],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web16',
-            topicId: 'module2',
-            question: 'Because search services maintain databases, the search results returned by one search engine will be exactly the same results returned by another search engine.',
-            options: ['True', 'False'],
-            answer: 1,
-            explanation: 'Different search engines use different algorithms and indexes, so results can vary significantly between them.',
-          },
-          {
-            id: 'web17',
-            topicId: 'module2',
-            question: 'Any information that you find on web sites has been subjected to strict guidelines to ensure accuracy.',
-            options: ['True', 'False'],
-            answer: 1,
-            explanation: 'Web content varies widely in accuracy and reliability. Always verify information from multiple sources.',
-          },
-          {
-            id: 'web18',
-            topicId: 'module2',
-            question: 'All information on the web is reliable.',
-            options: ['True', 'False'],
-            answer: 1,
-            explanation: 'The web contains both reliable and unreliable information. Critical evaluation of sources is essential.',
-          },
-
-          // Communication & Messaging
-          {
-            id: 'web19',
-            topicId: 'module2',
-            question: 'Select the two best known electronic messaging systems.',
-            options: ['write messaging', 'text messaging', 'instant messaging'],
-            answer: [1, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'web20',
-            topicId: 'module2',
-            question: 'Direct, live communication with people online is called ________ messaging.',
-            options: ['prompt', 'instant', 'e-mail', 'immediate'],
-            answer: 1,
-          },
-          {
-            id: 'web21',
-            topicId: 'module2',
-            question: 'Which of the following are popular ways to communicate on cell phones, where messages are short and informal, and instantaneous responses are the standard?',
-            options: ['Text messaging', 'Instant messaging', 'Email'],
-            answer: [0, 1],
-            multiple: true,
-            answersRequired: 2,
-          },
-          {
-            id: 'web22',
-            topicId: 'module2',
-            question: '________ messaging is also known as SMS.',
-            options: ['Text', 'Email', 'Instant'],
-            answer: 0,
-          },
-          {
-            id: 'web23',
-            topicId: 'module2',
-            question: '________ messaging is the process of sending a short electronic message, using a wireless network to another person, who views the message on a mobile device.',
-            options: ['Text', 'FTP', 'Plug-in'],
-            answer: 0,
-          },
-          {
-            id: 'web24',
-            topicId: 'module2',
-            question: 'A variation of SMS that allows you to send images, video, and sound.',
-            options: ['Web Based Messaging', 'Client Based Messaging', 'Multimedia Messaging Service'],
-            answer: 2,
-          },
-          {
-            id: 'web25',
-            topicId: 'module2',
-            question: 'MMS is needed for transmitting which of the following in a message?',
-            options: ['Video', 'Sound', 'Images', 'Text'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web26',
-            topicId: 'module2',
-            question: 'A typical ________ has four basic elements: header, message, signature, and attachment.',
-            options: ['instant', 'text', 'e-mail'],
-            answer: 2,
-          },
-          {
-            id: 'web27',
-            topicId: 'module2',
-            question: 'E-mail addresses have two basic parts, the user\'s name and the ________ name, which includes the top-level domain.',
-            options: ['domain', 'extension'],
-            answer: 0,
-          },
-
-          // Social Media & Content
-          {
-            id: 'web28',
-            topicId: 'module2',
-            question: 'A ________ publishes long stories in contrast to short sentences that take only a few seconds to write.',
-            options: ['tweet', 'microblog', 'wiki', 'blog'],
-            answer: 3,
-          },
-          {
-            id: 'web29',
-            topicId: 'module2',
-            question: '________ is an example of a microblog.',
-            options: ['Blogger', 'LinkedIn', 'WordPress', 'X'],
-            answer: 3,
-          },
-          {
-            id: 'web30',
-            topicId: 'module2',
-            question: 'Which of the following are used to broadcast audio content, such as news or comedy programs, over the Internet?',
-            options: ['Search engines', 'Wikis', 'Blogs', 'Podcasts'],
-            answer: 3,
-          },
-          {
-            id: 'web31',
-            topicId: 'module2',
-            question: 'Podcasts are designed to broadcast ________ content over the Internet.',
-            options: ['video', 'photos', 'audio', 'blogs'],
-            answer: 2,
-          },
-          {
-            id: 'web32',
-            topicId: 'module2',
-            question: 'The sites in this image (Facebook, Google+, LinkedIn, Instagram, Pinterest, Tumblr, Vine) are examples of ________.',
-            options: ['browsers', 'social networking', 'web utilities'],
-            answer: 1,
-          },
-          {
-            id: 'web33',
-            topicId: 'module2',
-            question: 'Some sites promote fake news including manipulated videos known as ________ where an individual\'s appearance or message is changed.',
-            options: ['deceptions', 'real fakes', 'morphisms', 'deep fakes'],
-            answer: 3,
-          },
-          {
-            id: 'web34',
-            topicId: 'module2',
-            question: 'Which of the following have made deep fakes easier to produce and therefore more common and dangerous?',
-            options: ['Advances in artificial intelligence', 'A revision of national copyright laws', 'Improvements in image manipulation', 'The termination of federal regulations banning deep fakes'],
-            answer: [0, 2],
-            multiple: true,
-            answersRequired: 2,
-          },
-
-          // E-Commerce & Digital Payments
-          {
-            id: 'web35',
-            topicId: 'module2',
-            question: '________ is the general term to describe the buying and selling of goods on the Internet.',
-            options: ['E-trade', 'eBay', 'E-commerce'],
-            answer: 2,
-          },
-          {
-            id: 'web36',
-            topicId: 'module2',
-            question: 'Select all the choices that are typical characteristics of e-commerce.',
-            options: [
-              'Sellers can eliminate the costs of owning a retail outlet.',
-              'Goods can be purchased anytime of the day or night.',
-              'Shoppers have immediate access to physical goods that they purchase.',
-              'Products are shipped directly from the warehouse to the consumer.',
-            ],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web37',
-            topicId: 'module2',
-            question: 'The greatest challenge for e-commerce is the development of fast, ________ and reliable payment methods.',
-            options: ['easy', 'quick', 'secure'],
-            answer: 2,
-          },
-          {
-            id: 'web38',
-            topicId: 'module2',
-            question: 'Amazon.com is an example of a ________ application.',
-            options: ['C2C', 'B2C', 'B2B'],
-            answer: 1,
-          },
-          {
-            id: 'web39',
-            topicId: 'module2',
-            question: '________ commerce involves the sale of a product or service to the general public or end users.',
-            options: ['C2C', 'B2C', 'B2B'],
-            answer: 1,
-          },
-          {
-            id: 'web40',
-            topicId: 'module2',
-            question: 'Select all the common B2C applications.',
-            options: ['financial trading', 'online banking', 'shopping', 'person-to-person auction sites'],
-            answer: [0, 1, 2],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web41',
-            topicId: 'module2',
-            question: 'The Internet\'s equivalent to traditional cash is ________.',
-            options: ['credit cards', 'barter', 'digital currency', 'checks'],
-            answer: 2,
-          },
-          {
-            id: 'web42',
-            topicId: 'module2',
-            question: 'Venmo and PayPal are examples of ________.',
-            options: ['internet security suites', 'digital cash providers', 'cloud computing', 'auction sites'],
-            answer: 1,
-          },
-          {
-            id: 'web43',
-            topicId: 'module2',
-            question: 'The public ledger used to record all bitcoin transactions is called the ________.',
-            options: ['coinbase', 'balance sheet', 'blockchain', 'cryptocurrency'],
-            answer: 2,
-          },
-          {
-            id: 'web44',
-            topicId: 'module2',
-            question: 'The sites in this image (Amazon pay, Google Wallet, Venmo, PayPal) are examples of ________.',
-            options: ['specialized search engines', 'web utilities', 'digital cash providers'],
-            answer: 2,
-          },
-
-          // Cloud Computing & File Transfer
-          {
-            id: 'web45',
-            topicId: 'module2',
-            question: '________ frees users from owning, maintaining, and storing software and data.',
-            options: ['Internet computing', 'Web computing', 'Desktop applications', 'Cloud computing'],
-            answer: 3,
-          },
-          {
-            id: 'web46',
-            topicId: 'module2',
-            question: 'Select all the basic components of cloud computing.',
-            options: ['Clients', 'Network', 'Solid-state storage', 'Service providers'],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web47',
-            topicId: 'module2',
-            question: 'The speed and reliability of the user\'s access to the Internet is one component that determines the efficiency of ________ computing.',
-            options: ['cloud', 'desktop', 'client'],
-            answer: 0,
-          },
-          {
-            id: 'web48',
-            topicId: 'module2',
-            question: 'Select all the factors determining the efficiency of cloud computing in comparison to offline computing.',
-            options: [
-              'reliability of the user\'s access to the Internet',
-              'the resolution of the computer monitor',
-              'reliable transmission of data and programs',
-              'speed of the user\'s access to the Internet',
-            ],
-            answer: [0, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web49',
-            topicId: 'module2',
-            question: 'Transferring a file from the Internet to your computer is called ________.',
-            options: ['downloading', 'attaching', 'uploading', 'sending'],
-            answer: 0,
-          },
-          {
-            id: 'web50',
-            topicId: 'module2',
-            question: 'Using ________ utility software, you can copy files to your computer from specially configured servers.',
-            options: ['file transfer', 'filter', 'internet security'],
-            answer: 0,
-          },
-          {
-            id: 'web51',
-            topicId: 'module2',
-            question: 'Microsoft\'s OneDrive is an example of a(n) ________ file transfer service for uploading and downloading files.',
-            options: ['BitTorrent', 'web-based', 'filter', 'FTP'],
-            answer: 1,
-          },
-          {
-            id: 'web52',
-            topicId: 'module2',
-            question: 'Select all the examples of types of file transfer.',
-            options: ['consumer-to-consumer', 'BitTorrent', 'Web-based file transfer service', 'JavaScript', 'FTP'],
-            answer: [1, 2, 4],
-            multiple: true,
-            answersRequired: 3,
-          },
-
-          // Security & Utilities
-          {
-            id: 'web53',
-            topicId: 'module2',
-            question: 'Select all the examples of Web utilities.',
-            options: ['cloud computing', 'file transfer utilities', 'Internet security suites', 'filters'],
-            answer: [1, 2, 3],
-            multiple: true,
-            answersRequired: 3,
-          },
-          {
-            id: 'web54',
-            topicId: 'module2',
-            question: '________ suites provide a collection of utility programs designed to protect users against computer viruses and other threats, especially while they are online.',
-            options: ['Office', 'Productivity', 'Security', 'Cloud'],
-            answer: 2,
-          },
-          {
-            id: 'web55',
-            topicId: 'module2',
-            question: 'A parent or organization would use this to block web sites and set time limits.',
-            options: ['File transfer utility', 'Filter', 'Internet security suite'],
-            answer: 1,
-          },
-          // New Database Questions
-          {
-            id: 'web56',
-            topicId: 'module1',
-            question: 'Which of the following is a database management system?',
-            options: ['Microsoft Word', 'Microsoft Excel', 'Microsoft Access', 'Microsoft PowerPoint'],
-            answer: 2
-          },
-          {
-            id: 'web57',
-            topicId: 'module1',
-            question: 'In a database, a collection of related fields is called a:',
-            options: ['Record', 'Table', 'Form', 'Report'],
-            answer: 0
-          },
-          {
-            id: 'web58',
-            topicId: 'module1',
-            question: 'Which of the following is NOT a valid data type in most database systems?',
-            options: ['Text', 'Number', 'Date/Time', 'Paragraph'],
-            answer: 3
-          },
-          // New Spreadsheet Questions
-          {
-            id: 'web59',
-            topicId: 'module3',
-            question: 'In a spreadsheet, the cell reference for the cell in column C and row 5 is:',
-            options: ['5C', 'C5', 'C-5', '5-C'],
-            answer: 1
-          },
-          {
-            id: 'web60',
-            topicId: 'module3',
-            question: 'Which function would you use to add up a range of cells in a spreadsheet?',
-            options: ['ADD', 'TOTAL', 'SUM', 'CALCULATE'],
-            answer: 2
-          },
-          {
-            id: 'web61',
-            topicId: 'module3',
-            question: 'In a spreadsheet, what does the formula =A1+B1*C1 calculate?',
-            options: [
-              'The sum of A1 and B1, then multiplied by C1',
-              'The sum of A1, B1, and C1',
-              'The product of B1 and C1, then added to A1',
-              'The average of A1, B1, and C1'
-            ],
-            answer: 2
-          },
-          // New Word Processing Questions
-          {
-            id: 'web62',
-            topicId: 'module3',
-            question: 'Which feature in a word processor allows you to see how your document will look when printed?',
-            options: ['Print Layout', 'Draft View', 'Outline View', 'Web Layout'],
-            answer: 0
-          },
-          {
-            id: 'web63',
-            topicId: 'module3',
-            question: 'What is the purpose of the thesaurus feature in word processing software?',
-            options: [
-              'To check spelling',
-              'To find synonyms and antonyms',
-              'To count words and characters',
-              'To format text'
-            ],
-            answer: 1
-          },
-          // New Graphics & Multimedia Questions
-          {
-            id: 'web64',
-            topicId: 'module3',
-            question: 'Which file format is best for photographs with many colors?',
-            options: ['GIF', 'PNG', 'JPG', 'BMP'],
-            answer: 2
-          },
-          {
-            id: 'web65',
-            topicId: 'module3',
-            question: 'Which of the following is a vector graphics format?',
-            options: ['JPG', 'GIF', 'SVG', 'PNG'],
-            answer: 2
-          },
-          // New GUI Questions
-          {
-            id: 'web66',
-            topicId: 'module3',
-            question: 'What does GUI stand for?',
-            options: [
-              'Graphical User Interface',
-              'General User Interface',
-              'Graphical Utility Interface',
-              'General Utility Interface'
-            ],
-            answer: 0
-          },
-          {
-            id: 'web67',
-            topicId: 'module3',
-            question: 'Which of the following is NOT a common GUI element?',
-            options: ['Button', 'Menu', 'Command Line', 'Icon'],
-            answer: 2
-          },
-          // New Mobile & Cloud Questions
-          {
-            id: 'web68',
-            topicId: 'module2',
-            question: 'What is the main advantage of cloud storage over local storage?',
-            options: [
-              'Faster access speed',
-              'Access files from any device with internet',
-              'No need for internet connection',
-              'Higher security'
-            ],
-            answer: 1
-          },
-          {
-            id: 'web69',
-            topicId: 'module3',
-            question: 'Which of the following is an example of a mobile operating system?',
-            options: ['Windows', 'macOS', 'Android', 'Linux'],
-            answer: 2
-          },
-          // New Multiple Answer Questions
-          {
-            id: 'web70',
-            topicId: 'module3',
-            question: 'Select all the features commonly found in presentation software:',
-            options: [
-              'Slide transitions',
-              'Spreadsheet calculations',
-              'Animation effects',
-              'Database management',
-              'Speaker notes'
-            ],
-            answer: [0, 2, 4],
-            multiple: true,
-            answersRequired: 3
-          },
-          {
-            id: 'web71',
-            topicId: 'module1',
-            question: 'Which of the following are advantages of using a database management system?',
-            options: [
-              'Data redundancy',
-              'Data integrity',
-              'Data inconsistency',
-              'Data security',
-              'Data sharing'
-            ],
-            answer: [1, 3, 4],
-            multiple: true,
-            answersRequired: 3
-          },
-          // New System Software & Operating Systems Questions
-          {
-            id: 'web72',
-            topicId: 'module1',
-            question: '________ software controls where a program is stored in memory, how commands are converted so that the system unit can process them, and where files are saved.',
-            options: ['Application', 'System', 'Utility', 'Driver'],
-            answer: 1
-          },
-          {
-            id: 'web73',
-            topicId: 'module1',
-            question: 'Which of the following performs specific tasks related to managing a computer?',
-            options: ['Language translators', 'Operating systems', 'Device drivers', 'Utilities'],
-            answer: 3
-          },
-          {
-            id: 'web74',
-            topicId: 'module1',
-            question: 'What type of program is represented by File History, Disk Cleanup, and Disk Defragmenter?',
-            options: ['Operating system', 'Utility program', 'Security application', 'Web-design application'],
-            answer: 1
-          },
-          {
-            id: 'web75',
-            topicId: 'module1',
-            question: 'Utility suites combine several programs into one package.',
-            options: ['True', 'False'],
-            answer: 0
-          },
-          {
-            id: 'web76',
-            topicId: 'module1',
-            question: 'Troubleshooting programs and backup programs are examples of ________ designed to make computing easier.',
-            options: ['codecs', 'device drivers', 'utilities', 'applications'],
-            answer: 2
-          },
-          {
-            id: 'web77',
-            topicId: 'module1',
-            question: 'Select all the types of system software.',
-            options: ['language translators', 'device drivers', 'operating systems', 'utilities'],
-            answer: [0, 1, 2, 3],
-            multiple: true,
-            answersRequired: 4
-          },
-          {
-            id: 'web78',
-            topicId: 'module1',
-            question: 'Select the two ways to boot a computer.',
-            options: ['hot', 'cool', 'cold', 'warm'],
-            answer: [2, 3],
-            multiple: true,
-            answersRequired: 2
-          },
-          {
-            id: 'web79',
-            topicId: 'module1',
-            question: 'A _______ suite contains programs that provide a variety of functions such as performance improvement and virus prevention.',
-            options: ['cloud', 'productivity', 'utility', 'security'],
-            answer: 2
-          },
-          {
-            id: 'web80',
-            topicId: 'module1',
-            question: '________ coordinate computer resources, provide an interface between users and the computer, and run applications.',
-            options: ['Device drivers', 'Language translators', 'Operating systems', 'Utilities'],
-            answer: 2
-          },
-          // New Hardware & System Unit Questions
-          {
-            id: 'web81',
-            topicId: 'module4',
-            question: 'The ______ is a container that houses most of the electronic components that make up a computer system.',
-            options: ['system unit', 'microprocessor', 'motherboard', 'CPU'],
-            answer: 0
-          },
-          {
-            id: 'web82',
-            topicId: 'module4',
-            question: 'Select all the items that are components of a system board.',
-            options: ['slots', 'sockets', 'mouse', 'bus lines'],
-            answer: [0, 1, 3],
-            multiple: true,
-            answersRequired: 3
-          },
-          {
-            id: 'web83',
-            topicId: 'module4',
-            question: 'To run Windows, Microsoft recommends that your computer has at least 4GB of ______.',
-            options: ['ROM', 'RAM', 'Cache', 'Flash'],
-            answer: 1
-          },
-          {
-            id: 'web84',
-            topicId: 'module4',
-            question: 'The central processing unit is also called the ______.',
-            options: ['control Unit', 'processor', 'arithmetic-logic unit', 'motherboard'],
-            answer: 1
-          },
-          {
-            id: 'web85',
-            topicId: 'module4',
-            question: 'The instructions that are needed to start a computer, access memory, and to handle keyboard input are typically stored in ______.',
-            options: ['ROM', 'RAM', 'Cache', 'Hard Drive'],
-            answer: 0
-          },
-          {
-            id: 'web86',
-            topicId: 'module4',
-            question: 'The CPU has two basic components: the ______ and the arithmetic-logic unit.',
-            options: ['microprocessor', 'power supply', 'random access memory', 'control unit'],
-            answer: 3
-          },
-          {
-            id: 'web87',
-            topicId: 'module4',
-            question: 'A ______ processor can provide two or more separate and independent CPUs.',
-            options: ['multicore', 'smart', 'multiple', 'parallel'],
-            answer: 0
-          },
-          {
-            id: 'web88',
-            topicId: 'module4',
-            question: 'For multicore processors to be used effectively, computers must divide tasks into parts and distribute them across the cores. This operation is called ______.',
-            options: ['parallel processing', 'smart processing', 'distribution', 'multitasking'],
-            answer: 0
-          },
-          {
-            id: 'web89',
-            topicId: 'module4',
-            question: 'Select all the types of memory.',
-            options: ['ALU', 'read-only', 'flash', 'random-access'],
-            answer: [1, 2, 3],
-            multiple: true,
-            answersRequired: 3
-          },
-          {
-            id: 'web90',
-            topicId: 'module4',
-            question: 'RAM is called temporary or ______ because its contents are lost when the power is turned off.',
-            options: ['ROM', 'Volatile', 'Permanent', 'Flash'],
-            answer: 1
-          }
-        ],
-      };
-
-      const MCQ_STORAGE_KEY = 'intro_mcq_state_v1';
-
-      let mcqState = {
-        ar: { order: [], answers: {} },
-        en: { order: [], answers: {} },
-      };
-
-      function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i -= 1) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
-
-      function initMcqStateForLang(lang) {
-        const list = questionsMCQ[lang];
-        const order = list.map((_, idx) => idx);
-        shuffle(order);
-        mcqState[lang] = {
-          order,
-          answers: {},
-        };
-      }
-
-      function loadMcqState() {
-        try {
-          const raw = localStorage.getItem(MCQ_STORAGE_KEY);
-          if (raw) {
-            const parsed = JSON.parse(raw);
-            if (parsed && parsed.ar && parsed.en) {
-              mcqState = parsed;
+        // Initialize app
+        function initializeApp() {
+            // Set up event listeners
+            setupEventListeners();
+            // Build the question navigation in the sidebar
+            if (typeof buildQuestionNav === 'function') buildQuestionNav();
+            
+            // Set up start button
+            const startBtn = document.getElementById('start-btn');
+            if (startBtn) {
+                startBtn.addEventListener('click', () => {
+                    document.getElementById('splash-page').style.display = 'none';
+                    document.getElementById('exercise-page').style.display = 'block';
+                    if (questions.length > 0) {
+                        loadQuestion(currentQuestionIndex);
+                    }
+                });
             }
-          }
-        } catch (e) {
-          // ignore parse errors
         }
 
-        ['ar', 'en'].forEach((lang) => {
-          const list = questionsMCQ[lang];
-          if (
-            !mcqState[lang] ||
-            !Array.isArray(mcqState[lang].order) ||
-            mcqState[lang].order.length !== list.length
-          ) {
-            initMcqStateForLang(lang);
-          }
-        });
-      }
-
-      function saveMcqState() {
-        try {
-          localStorage.setItem(MCQ_STORAGE_KEY, JSON.stringify(mcqState));
-        } catch (e) {
-          // ignore storage errors
+        // Initialize when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
         }
-      }
 
-      // --- Explanation term translations (persisted) ---
-      const EXPLAIN_TERMS_KEY = 'intro_explain_terms_v1';
-      function loadExplainTerms() {
-        try {
-          const raw = localStorage.getItem(EXPLAIN_TERMS_KEY);
-          if (raw) return JSON.parse(raw);
-        } catch (e) {
-          // ignore
-        }
-        return {};
-      }
+        // Load question
+        function loadQuestion(index) {
+            if (index < 0 || index >= questions.length) return;
+            
+            currentQuestionIndex = index;
+            const question = questions[index];
+            isAnswered = userAnswers[question.id] !== undefined;
 
-      function saveExplainTerms(obj) {
-        try {
-          localStorage.setItem(EXPLAIN_TERMS_KEY, JSON.stringify(obj || {}));
-        } catch (e) {
-          // ignore
-        }
-      }
+            // Update question number
+            document.getElementById('question-number').textContent = 
+                `Question ${index + 1} of ${questions.length}`;
 
-      let explainTermTranslations = loadExplainTerms();
+            // Update question text
+            document.getElementById('question-text').textContent = question.question;
 
-      function getTermTranslation(term) {
-        return explainTermTranslations[term] || null;
-      }
+            // Clear and populate options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
 
-      function setTermTranslation(term, value) {
-        if (!term) return;
-        if (value && value.trim().length) explainTermTranslations[term] = value.trim();
-        else delete explainTermTranslations[term];
-        saveExplainTerms(explainTermTranslations);
-      }
+            const isMultiple = Array.isArray(question.correct);
+            const inputType = isMultiple ? 'checkbox' : 'radio';
+            const name = `question-${question.id}`;
 
-      function detectEnglishTermsInText(text) {
-        if (!text) return [];
-        // match words containing Latin letters (common technical terms / acronyms)
-        const re = /\b[A-Za-z0-9][A-Za-z0-9\-\/\.]{1,}\b/g;
-        const found = text.match(re) || [];
-        // filter out short/one-letter tokens and common URL pieces
-        const filtered = found.filter((s) => s.length > 1 && !/^https?:\/\//i.test(s));
-        // unique
-        return Array.from(new Set(filtered));
-      }
+            question.options.forEach((option, idx) => {
+                const optionItem = document.createElement('div');
+                optionItem.className = 'option-item';
+                
+                const input = document.createElement('input');
+                input.type = inputType;
+                input.name = name;
+                input.value = idx;
+                input.id = `option-${question.id}-${idx}`;
+                
+                const label = document.createElement('label');
+                label.htmlFor = `option-${question.id}-${idx}`;
+                label.textContent = option;
 
-      function createPointNodesWithTerms(text) {
-        const nodes = [];
-        const re = /\b[A-Za-z0-9][A-Za-z0-9\-\/\.]{1,}\b/g;
-        let lastIndex = 0;
-        let match;
-        while ((match = re.exec(text)) !== null) {
-          const term = match[0];
-          const start = match.index;
-          if (start > lastIndex) {
-            nodes.push(document.createTextNode(text.slice(lastIndex, start)));
-          }
-          const span = document.createElement('span');
-          // simplified, subtle style (non-interactive)
-          span.className = 'underline decoration-dotted text-indigo-700';
-          span.dataset.term = term;
-          span.textContent = term;
+                optionItem.appendChild(input);
+                optionItem.appendChild(label);
 
-          const trans = getTermTranslation(term);
-          if (trans) {
-            const small = document.createElement('span');
-            small.className = 'text-xs text-gray-600 mr-1';
-            small.textContent = ` (${trans})`;
-            // show translation after the term (subtle)
-            nodes.push(span);
-            nodes.push(small);
-          } else {
-            nodes.push(span);
-          }
+                // When the input changes, toggle a selected class for visual state
+                input.addEventListener('change', () => {
+                    if (input.checked) {
+                        optionItem.classList.add('selected');
+                    } else {
+                        optionItem.classList.remove('selected');
+                    }
+                });
 
-          lastIndex = re.lastIndex;
-        }
-        if (lastIndex < text.length) nodes.push(document.createTextNode(text.slice(lastIndex)));
-        // If no matches found, return a single text node for the whole text
-        if (nodes.length === 0) return [document.createTextNode(text)];
-        return nodes;
-      }
+                // Allow clicking the entire option area to select/toggle the input
+                optionItem.addEventListener('click', (e) => {
+                    // If the actual input was clicked, let the browser handle it
+                    if (e.target === input) return;
+                    if (inputType === 'radio') {
+                        input.checked = true;
+                    } else {
+                        input.checked = !input.checked;
+                    }
+                    // Fire change so listeners run
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                });
 
-      // Glossary panel removed for a cleaner UI; translations still stored and editable by clicking terms.
-
-      function renderHeader() {
-        const t = texts[state.lang];
-        document.getElementById('title-main').textContent = t.titleMain;
-        document.getElementById('title-sub').textContent = t.titleSub;
-        document.getElementById('label-language').textContent = t.labelLanguage;
-        document.getElementById('footer-title').textContent = t.footerTitle;
-        document.getElementById('footer-text').textContent = t.footerText;
-        document.documentElement.lang = state.lang === 'ar' ? 'ar' : 'en';
-        document.body.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
-      }
-
-      function renderTabs() {
-        const t = texts[state.lang];
-        const nav = document.getElementById('tabs-nav');
-        nav.innerHTML = '';
-        const tabs = [
-          { id: 'explain', label: t.tabs.explain },
-          { id: 'questions', label: t.tabs.questions },
-        ];
-
-        tabs.forEach((tab) => {
-          const btn = document.createElement('button');
-          btn.textContent = tab.label;
-          btn.className =
-            'px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all border-2' +
-            (state.activeTab === tab.id
-              ? ' bg-blue-600 text-white shadow-lg border-blue-600'
-              : ' bg-white text-blue-600 hover:bg-blue-50 border-blue-600');
-          btn.addEventListener('click', () => {
-            state.activeTab = tab.id;
-            renderTabs();
-            renderContent();
-          });
-          nav.appendChild(btn);
-        });
-      }
-
-      function scrollToExplanation(topicId, context = {}) {
-        state.activeTab = 'explain';
-        renderTabs();
-        renderContent();
-
-        setTimeout(() => {
-          const targetId = `explain-${topicId}-${state.lang}`;
-          const el = document.getElementById(targetId);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            const offset = 90;
-            const scrollY = window.pageYOffset + rect.top - offset;
-            window.scrollTo({ top: scrollY, behavior: 'smooth' });
-
-            // If a question context is provided, show a contextual banner
-            const qId = context.qId;
-            let showBanner = false;
-            let bannerText = '';
-            if (qId) {
-              try {
-                const qObj = questionsMCQ['en'].find((x) => x.id === qId);
-                const saved = mcqState['en'] && mcqState['en'].answers ? mcqState['en'].answers[qId] : null;
-
-                let wrongFlag = false;
-                if (saved) {
-                  if (Array.isArray(saved)) {
-                    const correct = Array.isArray(qObj.answer) ? qObj.answer.slice().sort() : [qObj.answer];
-                    const picked = saved.slice().sort();
-                    wrongFlag = JSON.stringify(correct) !== JSON.stringify(picked);
-                  } else if (typeof saved === 'object') {
-                    wrongFlag = !!saved.wrong;
-                  } else if (typeof saved === 'number') {
-                    wrongFlag = qObj ? saved !== qObj.answer : false;
-                  }
+                // Restore user's previous answer and update visual state
+                if (isAnswered) {
+                    const userAnswer = userAnswers[question.id];
+                    if (isMultiple) {
+                        if (Array.isArray(userAnswer) && userAnswer.includes(idx)) {
+                            input.checked = true;
+                            optionItem.classList.add('selected');
+                        }
+                    } else {
+                        if (userAnswer === idx) {
+                            input.checked = true;
+                            optionItem.classList.add('selected');
+                        }
+                    }
                 }
 
-                if (wrongFlag) {
-                  showBanner = true;
-                  bannerText = state.lang === 'ar' ? `لقد أجبت على السؤال (${qId}) بشكل غير صحيح. راجع الشرح التالي.` : `You answered question (${qId}) incorrectly. Review the explanation below.`;
-                } else if (qId) {
-                  // If not wrong, still offer a gentle contextual note
-                  showBanner = true;
-                  bannerText = state.lang === 'ar' ? `ملاحظة: هذا الشرح متعلق بالسؤال (${qId}).` : `Note: this explanation relates to question (${qId}).`;
-                }
-              } catch (e) {
-                // ignore any lookup errors
-              }
-            }
-
-            if (showBanner) {
-              // avoid duplicate banners
-              const existing = document.getElementById(`explain-banner-${topicId}`);
-              if (!existing) {
-                const banner = document.createElement('div');
-                banner.id = `explain-banner-${topicId}`;
-                banner.className = 'p-3 mb-3 rounded text-sm';
-                banner.style.background = 'linear-gradient(90deg, rgba(255,249,230,1) 0%, rgba(255,243,230,1) 100%)';
-                banner.style.border = '1px solid #f6e05e';
-                banner.style.color = '#92400e';
-                banner.textContent = bannerText;
-
-                // insert banner as first child of the explanation card body
-                el.insertBefore(banner, el.firstChild);
-
-                // auto-remove after 9 seconds
-                setTimeout(() => {
-                  const b = document.getElementById(`explain-banner-${topicId}`);
-                  if (b && b.parentElement) b.parentElement.removeChild(b);
-                }, 9000);
-              }
-            }
-
-            // Add a temporary highlight to draw the user's attention
-            const prevTransition = el.style.transition;
-            const prevBox = el.style.boxShadow;
-            const prevBorderRadius = el.style.borderRadius;
-            el.style.transition = 'box-shadow 0.3s ease, transform 0.15s ease';
-            el.style.boxShadow = '0 6px 30px rgba(59,130,246,0.25)';
-            el.style.borderRadius = '0.5rem';
-            el.style.transform = 'translateY(-4px)';
-            setTimeout(() => {
-              el.style.transform = '';
-            }, 160);
-            setTimeout(() => {
-              el.style.boxShadow = prevBox || '';
-              el.style.transition = prevTransition || '';
-              el.style.borderRadius = prevBorderRadius || '';
-            }, 4200);
-          }
-        }, 50);
-      }
-
-      function renderContent() {
-        const container = document.getElementById('tab-content');
-        container.innerHTML = '';
-
-        if (state.activeTab === 'explain') {
-          const data = explanationData[state.lang];
-          data.forEach((module) => {
-            const card = document.createElement('div');
-            card.className =
-              'bg-white rounded-lg shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-[1.3fr_1fr]';
-            card.id = `explain-${module.id}-${state.lang}`;
-
-            const headerBodyWrapper = document.createElement('div');
-
-            const header = document.createElement('div');
-            header.className =
-              'p-4 sm:p-6 bg-gradient-to-r from-blue-500 to-indigo-500 text-white flex items-center justify-between';
-
-            const left = document.createElement('div');
-            left.className = 'flex items-center gap-3';
-
-            const iconSpan = document.createElement('span');
-            iconSpan.textContent = module.icon;
-            iconSpan.className = 'text-2xl sm:text-3xl';
-
-            const titleWrap = document.createElement('div');
-            const title = document.createElement('h2');
-            title.textContent = module.title;
-            title.className = 'text-lg sm:text-xl font-bold';
-
-            const tagline = document.createElement('p');
-            tagline.textContent = module.tagline;
-            tagline.className = 'text-xs sm:text-sm text-blue-100 mt-1';
-
-            titleWrap.appendChild(title);
-            titleWrap.appendChild(tagline);
-
-            left.appendChild(iconSpan);
-            left.appendChild(titleWrap);
-            header.appendChild(left);
-
-            const body = document.createElement('div');
-            body.className = 'p-4 sm:p-6 text-gray-700 leading-relaxed';
-
-            // (simplified) no glossary panel — terms are inline and editable by clicking
-
-            // Render points with better spacing and term highlighting
-            const pointsWrapper = document.createElement('div');
-            pointsWrapper.className = 'space-y-3 text-sm sm:text-base';
-            module.points.forEach((p) => {
-              const pEl = document.createElement('div');
-              pEl.className = 'bg-white/0 rounded px-2 py-2 leading-relaxed text-gray-800';
-              const nodes = createPointNodesWithTerms(p);
-              nodes.forEach((n) => pEl.appendChild(n));
-              pointsWrapper.appendChild(pEl);
+                optionsContainer.appendChild(optionItem);
             });
 
-            body.appendChild(pointsWrapper);
-            headerBodyWrapper.appendChild(header);
-            headerBodyWrapper.appendChild(body);
+            // Update submit button
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = isAnswered;
+            submitBtn.textContent = isAnswered ? 'Already Answered' : 'Submit Answer »';
 
-            const imageWrapper = document.createElement('div');
-            imageWrapper.className = 'hidden md:block relative';
-            const imageInfo = explanationImages[module.id];
-            if (imageInfo) {
-              const img = document.createElement('img');
-              img.src = imageInfo.url;
-              img.alt = state.lang === 'ar' ? imageInfo.altAr : imageInfo.altEn;
-              img.className = 'w-full h-full object-cover';
-              imageWrapper.appendChild(img);
-            }
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === questions.length - 1;
 
-            card.appendChild(headerBodyWrapper);
-            card.appendChild(imageWrapper);
-            container.appendChild(card);
-          });
-        } else if (state.activeTab === 'questions') {
-          // Use English questions always, regardless of selected UI language
-          const list = questionsMCQ['en'];
-
-          const controls = document.createElement('div');
-          controls.className = 'mb-4 flex justify-between items-center';
-
-          const info = document.createElement('span');
-          info.className = 'text-xs sm:text-sm text-gray-600';
-          info.textContent =
-            state.lang === 'ar'
-              ? 'ترتيب الأسئلة عشوائي ويتم حفظ تقدمك تلقائيًا.'
-              : 'Questions are shuffled and your progress is saved automatically.';
-
-          const resetBtn = document.createElement('button');
-          resetBtn.className =
-            'px-3 py-1 rounded-md text-xs sm:text-sm font-semibold bg-red-50 text-red-700 border border-red-200 hover:bg-red-100';
-          resetBtn.textContent =
-            state.lang === 'ar' ? '⟳ إعادة تعيين الأسئلة' : '⟳ Reset questions';
-
-          resetBtn.addEventListener('click', () => {
-            // Reset English question order/state only
-            initMcqStateForLang('en');
-            saveMcqState();
-            renderContent();
-          });
-
-          controls.appendChild(info);
-          controls.appendChild(resetBtn);
-          container.appendChild(controls);
-
-          // Persist answers using the English MCQ state only
-          const langState = mcqState['en'];
-          const order = langState.order;
-
-          order.forEach((qIndex, displayIndex) => {
-            const q = list[qIndex];
-            const savedAnswer = langState.answers[q.id];
-
-            const card = document.createElement('div');
-            card.className = 'bg-white rounded-lg shadow-md overflow-hidden';
-
-            const questionHeader = document.createElement('div');
-            questionHeader.className =
-              'p-3 sm:p-4 bg-blue-50 border-l-4 border-blue-500 flex justify-between items-center';
-
-            const qText = document.createElement('span');
-            qText.className = 'font-semibold text-blue-900 text-sm sm:text-base';
-            qText.textContent = `${displayIndex + 1}. ${q.question}`;
-
-            const badge = document.createElement('span');
-            badge.className = 'text-xs sm:text-sm text-blue-700';
-            badge.textContent = 'MCQ';
-
-            questionHeader.appendChild(qText);
-            questionHeader.appendChild(badge);
-
-            const body = document.createElement('div');
-            body.className = 'p-3 sm:p-4 bg-blue-50 border-t border-blue-100';
-
-            const optionsList = document.createElement('ul');
-            optionsList.className = 'space-y-2';
-
-            const feedback = document.createElement('div');
-            feedback.className = 'mt-3 text-xs sm:text-sm hidden';
-
-            const goExplainBtn = document.createElement('button');
-            goExplainBtn.className =
-              'mt-2 inline-flex items-center gap-1 text-xs sm:text-sm text-indigo-700 hover:text-indigo-900 font-semibold hidden';
-            goExplainBtn.textContent =
-              state.lang === 'ar'
-                ? '↗ انتقل مباشرة إلى شرح هذا الجزء'
-                : '↗ Go directly to this topic explanation';
-
-            goExplainBtn.addEventListener('click', () => scrollToExplanation(q.topicId, { qId: q.id }));
-
-            // For multi-answer questions render checkboxes and a Confirm button
-            if (q.multiple) {
-              const checkboxEls = [];
-              const statusEls = [];
-
-              q.options.forEach((opt, idx) => {
-                const li = document.createElement('li');
-                li.className = 'flex items-center gap-3 text-sm sm:text-base bg-white rounded-md px-3 py-2 border border-blue-100';
-
-                const cb = document.createElement('input');
-                cb.type = 'checkbox';
-                cb.id = `${q.id}-opt-${idx}`;
-                cb.dataset.idx = idx;
-                cb.className = 'w-4 h-4 mt-0.5';
-
-                const label = document.createElement('label');
-                label.htmlFor = cb.id;
-                label.className = 'flex items-start gap-2 cursor-pointer';
-
-                const labelBadge = document.createElement('span');
-                labelBadge.className = 'font-semibold text-blue-700';
-                labelBadge.textContent = String.fromCharCode(65 + idx) + ')';
-
-                const text = document.createElement('span');
-                text.textContent = opt;
-
-                const status = document.createElement('span');
-                status.className = 'ml-auto text-sm';
-
-                label.appendChild(labelBadge);
-                label.appendChild(text);
-
-                li.appendChild(cb);
-                li.appendChild(label);
-                li.appendChild(status);
-
-                checkboxEls.push(cb);
-                statusEls.push(status);
-
-                optionsList.appendChild(li);
-              });
-
-              const confirmBtn = document.createElement('button');
-              confirmBtn.className = 'mt-2 px-3 py-1 rounded-md text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700';
-              confirmBtn.textContent = state.lang === 'ar' ? 'تأكيد الإجابات' : 'Confirm answers';
-              confirmBtn.id = `${q.id}-confirm-btn`;
-
-              confirmBtn.addEventListener('click', () => {
-                const selections = checkboxEls.map((cb) => (cb.checked ? Number(cb.dataset.idx) : -1)).filter((v) => v !== -1);
-                const correctArr = Array.isArray(q.answer) ? q.answer : [q.answer];
-                const required = q.answersRequired || correctArr.length;
-
-                // mark wrong if any selected is not in correctArr
-                const wrongSelected = selections.some((s) => correctArr.indexOf(s) === -1);
-
-                // Save state as object
-                const savedObj = { selections: selections.slice(), wrong: wrongSelected };
-                mcqState['en'].answers[q.id] = savedObj;
-                saveMcqState();
-
-                // Show marks per option by querying DOM (in case of reload)
-                correctArr.forEach((i) => {
-                  const cb = document.getElementById(`${q.id}-opt-${i}`);
-                  if (cb) {
-                    const status = cb.parentElement.querySelector('span.ml-auto');
-                    if (status) status.innerHTML = '<span class="text-green-700 font-semibold">✓</span>';
-                  }
-                });
-
-                // mark wrong selected ones
-                selections.forEach((s) => {
-                  if (correctArr.indexOf(s) === -1) {
-                    const cb = document.getElementById(`${q.id}-opt-${s}`);
-                    if (cb) {
-                      const status = cb.parentElement.querySelector('span.ml-auto');
-                      if (status) status.innerHTML = '<span class="text-red-700 font-semibold">✗</span>';
-                    }
-                  }
-                });
-
-                // feedback area
-                if (wrongSelected) {
-                  const prefix = state.lang === 'ar' ? 'إجابات غير صحيحة.' : 'Incorrect.';
-                  feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2';
-                  feedback.textContent = prefix;
-                  goExplainBtn.classList.remove('hidden');
-                } else {
-                  // if number of selections doesn't match required, still show hint
-                  if (selections.length !== required) {
-                    feedback.className = 'mt-3 text-xs sm:text-sm text-gray-700 bg-yellow-50 border border-yellow-200 rounded px-3 py-2';
-                    feedback.textContent = state.lang === 'ar' ? `اختر ${required - selections.length} خيارًا آخر.` : `Choose ${required - selections.length} more option(s).`;
-                    goExplainBtn.classList.add('hidden');
-                    return;
-                  }
-
-                  // exact required selected and none wrong
-                  feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-3 py-2';
-                  feedback.textContent = state.lang === 'ar' ? 'إجابات صحيحة، ممتاز.' : 'Correct answers, well done!';
-                  goExplainBtn.classList.add('hidden');
-                }
-
-                // disable further changes
-                checkboxEls.forEach((cb) => (cb.disabled = true));
-                confirmBtn.disabled = true;
-              });
-
-              body.appendChild(optionsList);
-              body.appendChild(confirmBtn);
+            // Show feedback if already answered
+            if (isAnswered) {
+                showAnswerFeedback(question);
             } else {
-              // single-answer flow: keep existing clickable list items
-              q.options.forEach((opt, idx) => {
-                const li = document.createElement('li');
-                li.className = 'cursor-pointer flex items-start gap-2 text-sm sm:text-base bg-white rounded-md px-3 py-2 border border-blue-100 hover:bg-blue-50 transition-colors';
-
-                const label = document.createElement('span');
-                label.className = 'font-semibold text-blue-700';
-                label.textContent = String.fromCharCode(65 + idx) + ')';
-
-                const text = document.createElement('span');
-                text.textContent = opt;
-
-                li.appendChild(label);
-                li.appendChild(text);
-
-                li.addEventListener('click', () => {
-                  const savedScalar = mcqState['en'].answers[q.id];
-                  if (typeof savedScalar !== 'undefined') return; // don't change after first pick
-                  const isCorrect = idx === q.answer;
-                  mcqState['en'].answers[q.id] = idx;
-                  saveMcqState();
-
-                  const correctText = q.options[q.answer];
-
-                  feedback.classList.remove('hidden');
-                  if (isCorrect) {
-                    feedback.textContent = state.lang === 'ar' ? 'إجابة صحيحة، ممتاز.' : 'Correct answer, well done!';
-                    feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-3 py-2';
-                    goExplainBtn.classList.add('hidden');
-                  } else {
-                    feedback.textContent = state.lang === 'ar' ? `الإجابة غير صحيحة. الإجابة الصحيحة هي: ${correctText}` : `Incorrect. The correct answer is: ${correctText}.`;
-                    feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2';
-                    goExplainBtn.classList.remove('hidden');
-                  }
-                });
-
-                optionsList.appendChild(li);
-              });
+                // Reset container style
+                document.getElementById('question-container').classList.remove('answered');
             }
-
-            body.appendChild(optionsList);
-            body.appendChild(feedback);
-            body.appendChild(goExplainBtn);
-
-            // If there is a saved answer(s), show the feedback immediately
-            if (typeof savedAnswer !== 'undefined') {
-              if (q.multiple) {
-                // support legacy array or new object { selections:[], wrong:bool }
-                let picked = [];
-                let wrongFlag = false;
-                if (Array.isArray(savedAnswer)) {
-                  picked = savedAnswer.slice();
-                } else if (savedAnswer && typeof savedAnswer === 'object' && Array.isArray(savedAnswer.selections)) {
-                  picked = savedAnswer.selections.slice();
-                  wrongFlag = !!savedAnswer.wrong;
-                } else if (typeof savedAnswer === 'number') {
-                  picked = [savedAnswer];
-                }
-
-                const correct = Array.isArray(q.answer) ? q.answer.slice() : [q.answer];
-                const required = q.answersRequired || correct.length;
-
-                const labeledHtml = correct
-                  .map((i) => `<div class="flex items-start gap-2"><span class="font-semibold text-blue-700">${String.fromCharCode(65 + i)})</span><span>${q.options[i]}</span></div>`)
-                  .join('');
-
-                // Try to mark checkboxes/status spans based on saved answer
-                correct.forEach((i) => {
-                  const cb = document.getElementById(`${q.id}-opt-${i}`);
-                  if (cb) {
-                    cb.checked = picked.indexOf(i) !== -1;
-                    cb.disabled = true;
-                    const status = cb.parentElement.querySelector('span.ml-auto');
-                    if (status) status.innerHTML = '<span class="text-green-700 font-semibold">✓</span>';
-                  }
-                });
-
-                // mark selected wrong ones
-                picked.forEach((p) => {
-                  if (correct.indexOf(p) === -1) {
-                    const cb = document.getElementById(`${q.id}-opt-${p}`);
-                    if (cb) {
-                      cb.disabled = true;
-                      const status = cb.parentElement.querySelector('span.ml-auto');
-                      if (status) status.innerHTML = '<span class="text-red-700 font-semibold">✗</span>';
-                    }
-                  }
-                });
-
-                // disable confirm button if present
-                const cbtn = document.getElementById(`${q.id}-confirm-btn`);
-                if (cbtn) cbtn.disabled = true;
-
-                feedback.classList.remove('hidden');
-                if (wrongFlag) {
-                  const prefix = state.lang === 'ar' ? 'إجابات غير صحيحة. الإجابات الصحيحة هي:' : 'Incorrect. The correct answers are:';
-                  feedback.innerHTML = `<div class="font-semibold mb-1">${prefix}</div>${labeledHtml}`;
-                  feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2';
-                  goExplainBtn.classList.remove('hidden');
-                } else if (picked.length < required) {
-                  feedback.textContent = state.lang === 'ar' ? `اختر ${required - picked.length} خيارًا آخر.` : `You have ${picked.length} correct selection(s). Choose ${required - picked.length} more.`;
-                  feedback.className = 'mt-3 text-xs sm:text-sm text-gray-700 bg-yellow-50 border border-yellow-200 rounded px-3 py-2';
-                  goExplainBtn.classList.add('hidden');
-                } else {
-                  const pickedSorted = picked.slice().sort();
-                  const correctSorted = correct.slice().sort();
-                  const isCorrectSaved = JSON.stringify(pickedSorted) === JSON.stringify(correctSorted);
-                  if (isCorrectSaved) {
-                    feedback.innerHTML = state.lang === 'ar' ? 'إجابات صحيحة، ممتاز.' : 'Correct answers, well done!';
-                    feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-3 py-2';
-                    goExplainBtn.classList.add('hidden');
-                  } else {
-                    const prefix = state.lang === 'ar' ? 'إجابات غير صحيحة. الإجابات الصحيحة هي:' : 'Incorrect. The correct answers are:';
-                    feedback.innerHTML = `<div class="font-semibold mb-1">${prefix}</div>${labeledHtml}`;
-                    feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2';
-                    goExplainBtn.classList.remove('hidden');
-                  }
-                }
-              } else {
-                const isCorrectSaved = savedAnswer === q.answer;
-                const correctText = q.options[q.answer];
-                feedback.classList.remove('hidden');
-                if (isCorrectSaved) {
-                  feedback.textContent = state.lang === 'ar' ? 'إجابة صحيحة، ممتاز.' : 'Correct answer, well done!';
-                  feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-3 py-2';
-                  goExplainBtn.classList.add('hidden');
-                } else {
-                  feedback.textContent = state.lang === 'ar' ? `الإجابة غير صحيحة. الإجابة الصحيحة هي: ${correctText}` : `Incorrect. The correct answer is: ${correctText}.`;
-                  feedback.className = 'mt-3 text-xs sm:text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2';
-                  goExplainBtn.classList.remove('hidden');
-                }
-              }
-            }
-
-            card.appendChild(questionHeader);
-            card.appendChild(body);
-            container.appendChild(card);
-          });
+            // update sidebar active/answered state
+            if (typeof updateNavActive === 'function') updateNavActive();
         }
-      }
 
-      document.getElementById('lang-select').addEventListener('change', (e) => {
-        state.lang = e.target.value;
-        renderHeader();
-        renderTabs();
-        renderContent();
-      });
+        // Set up event listeners
+        function setupEventListeners() {
+            // Submit answer
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', handleSubmit);
+            }
 
-      loadMcqState();
-      renderHeader();
-      renderTabs();
-      renderContent();
+            // Navigation
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentQuestionIndex > 0) {
+                        loadQuestion(currentQuestionIndex - 1);
+                    }
+                });
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentQuestionIndex < questions.length - 1) {
+                        loadQuestion(currentQuestionIndex + 1);
+                    }
+                });
+            }
+
+            // Sidebar toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeNav = document.getElementById('close-nav');
+            if (navToggle && sidebar) {
+                navToggle.addEventListener('click', () => {
+                    sidebar.classList.add('open');
+                    sidebar.setAttribute('aria-hidden','false');
+                });
+            }
+            if (closeNav && sidebar) {
+                closeNav.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebar.setAttribute('aria-hidden','true');
+                });
+            }
+        }
+
+        // Handle submit
+        function handleSubmit() {
+            if (questions.length === 0) return;
+            
+            const question = questions[currentQuestionIndex];
+            const isMultiple = Array.isArray(question.correct);
+            const name = `question-${question.id}`;
+            const inputs = document.querySelectorAll(`input[name="${name}"]:checked`);
+
+            if (inputs.length === 0) {
+                alert('Please select an answer');
+                return;
+            }
+
+            let selectedAnswers;
+            if (isMultiple) {
+                selectedAnswers = Array.from(inputs).map(input => parseInt(input.value));
+                userAnswers[question.id] = selectedAnswers;
+            } else {
+                selectedAnswers = parseInt(inputs[0].value);
+                userAnswers[question.id] = selectedAnswers;
+            }
+
+            isAnswered = true;
+            showAnswerFeedback(question, selectedAnswers);
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').textContent = 'Already Answered';
+        }
+
+        // Show answer feedback
+        function showAnswerFeedback(question, selectedAnswers = null) {
+            if (selectedAnswers === null) {
+                selectedAnswers = userAnswers[question.id];
+            }
+
+            const isMultiple = Array.isArray(question.correct);
+            const correctAnswers = isMultiple ? question.correct : [question.correct];
+            const userSelected = isMultiple ? selectedAnswers : [selectedAnswers];
+
+            const optionItems = document.querySelectorAll('.option-item');
+            
+            optionItems.forEach((item, idx) => {
+                const isCorrect = correctAnswers.includes(idx);
+                const isSelected = userSelected.includes(idx);
+
+                if (isCorrect) {
+                    item.classList.add('correct');
+                    item.classList.remove('incorrect');
+                } else if (isSelected) {
+                    item.classList.add('incorrect');
+                    item.classList.remove('correct');
+                } else {
+                    item.classList.remove('correct', 'incorrect');
+                }
+            });
+
+            // Add green background to container
+            document.getElementById('question-container').classList.add('answered');
+        }
+
+        // Build the question navigation list in the sidebar
+        function buildQuestionNav() {
+            const list = document.getElementById('question-list');
+            if (!list) return;
+            // `questions` may be declared with const/let in questions-data.js
+            // which does not create a `window.questions` property. Check
+            // the local variable instead.
+            if (typeof questions === 'undefined' || !Array.isArray(questions)) return;
+            list.innerHTML = '';
+            questions.forEach((q, i) => {
+                const li = document.createElement('li');
+                li.textContent = `Question ${i + 1}`;
+                li.dataset.index = i;
+                li.addEventListener('click', () => {
+                    loadQuestion(i);
+                    // close sidebar on selection for small screens
+                    const sb = document.getElementById('sidebar');
+                    if (sb) { sb.classList.remove('open'); sb.setAttribute('aria-hidden','true'); }
+                });
+                list.appendChild(li);
+            });
+            updateNavActive();
+        }
+
+        // Update active and answered states in the sidebar
+        function updateNavActive() {
+            const list = document.getElementById('question-list');
+            if (!list) return;
+            const items = list.querySelectorAll('li');
+            items.forEach(li => {
+                const idx = parseInt(li.dataset.index, 10);
+                li.classList.toggle('active', idx === currentQuestionIndex);
+                const q = questions[idx];
+                const answered = userAnswers && userAnswers[q.id] !== undefined;
+                li.classList.toggle('answered', !!answered);
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
