@@ -2799,4 +2799,240 @@ const questions = [
                         options: ['ROM', 'Volatile', 'Permanent', 'Flash'],
                         correct: 1
                     }
+                    ,
+                    {
+                        id: 'q_extra_25',
+                        topicId: 'module5',
+                        question: 'Conversion with highest risk:',
+                        options: ['Direct approach', 'Parallel', 'Pilot', 'Phased'],
+                        correct: 0,
+                    },
+                    {
+                        id: 'q_extra_26',
+                        topicId: 'module5',
+                        question: 'Least risky but expensive conversion:',
+                        options: ['Direct', 'Pilot', 'Parallel', 'Phased'],
+                        correct: 2,
+                    },
+                    {
+                        id: 'q_extra_34',
+                        topicId: 'module5',
+                        question: 'Making data unreadable (to protect it):',
+                        options: ['Backup', 'Encryption', 'Hacking', 'Formatting'],
+                        correct: 1,
+                    },
+                    {
+                        id: 'attached_1',
+                        topicId: 'module5',
+                        question: "What is a recommended way to ethically use ChatGPT for writing assistance?",
+                        options: ["Present ChatGPT's response as your own original work", 'Ask ChatGPT to write your entire essay', 'Copy and paste ChatGPT responses directly into assignments', 'Generate an outline using ChatGPT'],
+                        correct: 3
+                    },
+                    {
+                        id: 'attached_2',
+                        topicId: 'module5',
+                        question: 'Select the ways that ChatGPT can be used ethically and effectively to enhance the creation of an essay. (Select all that apply)',
+                        options: ['Asking it to provide a paragraph of content', 'Asking it to generate an outline', 'Asking it to provide facts', 'Asking it to rewrite a sentence you provide'],
+                        correct: [1, 3],
+                        multiple: true,
+                        answersRequired: 2
+                    },
+                    {
+                        id: 'attached_3',
+                        topicId: 'module5',
+                        question: "...is copying another person's ideas, words or writing and pretending that they are yours.",
+                        options: ['Plagiarism', 'Cybercopying', 'Encryption'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_4',
+                        topicId: 'module5',
+                        question: 'Is the use of the Internet, cell phones, or other devices to send or post content intended to hurt or embarrass another person?',
+                        options: ['Cyberbullying', 'Social networking', 'Phishing', 'Blogging'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_5',
+                        topicId: 'module5',
+                        question: 'Because technology is moving so fast and it is difficult for our legal system to catch up, ___ have become an essential element that governs computer use.',
+                        options: ['artificial laws', 'arbitrary principles', 'ethics', 'privacy'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_6',
+                        topicId: 'module5',
+                        question: 'To run Windows, Microsoft recommends that your computer has at least 4GB of ____',
+                        options: ['ROM', 'RAM', 'Cache', 'Flash'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_7',
+                        topicId: 'module5',
+                        question: '_____ is defined as the study of human factors related to the things people use (to avoid health risks).',
+                        options: ['Economics', 'Robotics', 'Ergonomics'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_8',
+                        topicId: 'module5',
+                        question: 'Sprinters are widely used with ATMs and gas pumps to print receipts. Which type are they?',
+                        options: ['Inkjet', 'Thermal', 'Laser', 'Plotter'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_9',
+                        topicId: 'module5',
+                        question: 'Which of the following is true of e-books?',
+                        options: ['They are available solely from the cloud.', 'They are traditional printed books in electronic format.', 'They are generally more expensive than paper books.'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_10',
+                        topicId: 'module5',
+                        question: '___ is a measurement of the capacity of the communication channel.',
+                        options: ['Channel width', 'Channel capacity', 'Bandwidth'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_11',
+                        topicId: 'module5',
+                        question: 'Which describes analog signals?',
+                        options: ['vary continuously', 'have a smooth, continuously varying shape', 'represent the presence or absence of an electronic pulse'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_12',
+                        topicId: 'module5',
+                        question: 'Which describes digital signals?',
+                        options: ['vary continuously', 'have a smooth shape', 'represent the presence or absence of an electronic pulse'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_13',
+                        topicId: 'module5',
+                        question: 'In a process called _____, messages are broken into parts and are then sent separately over the internet.',
+                        options: ['bands', 'packetization', 'domains', 'packets'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_14',
+                        topicId: 'module5',
+                        question: 'In a ____ network, nodes have equal authority and can act as both clients and servers.',
+                        options: ['peer-to-peer', 'client/server'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_15',
+                        topicId: 'module5',
+                        question: 'A(n) ___ gathers data, usually from publicly available databases, and sells it.',
+                        options: ['hacker', 'information reseller', 'carder'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_16',
+                        topicId: 'module5',
+                        question: 'People think that they can send email messages from their personal computers and that it cannot be traced. This is called the ___.',
+                        options: ['freedom of information act', 'illusion of anonymity', 'privacy act'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_17',
+                        topicId: 'module5',
+                        question: 'Web sites you visit deposit small pieces of information, called _____, on your hard disk.',
+                        options: ['error logs', 'cookies', 'spam'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_18',
+                        topicId: 'module5',
+                        question: 'This list, or ___ file, is created by your browser and shows the locations of web sites you\'ve visited.',
+                        options: ['web', 'cookie', 'history'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_19',
+                        topicId: 'module5',
+                        question: 'This type of computer monitoring software is so invasive it can record everything you type on your computer system.',
+                        options: ['Antispyware', 'Tracking cookie', 'Keylogger'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_20',
+                        topicId: 'module5',
+                        question: 'When a computer is running virtualization software, the operating system that interacts with the hardware is known as the ___.',
+                        options: ['guest', 'host'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_21',
+                        topicId: 'module5',
+                        question: 'When a computer is running virtualization software, the operating system for each virtual machine is known as the ___.',
+                        options: ['host operating system', 'guest operating system'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_22',
+                        topicId: 'module5',
+                        question: 'If an operating system supports multitasking and you have two programs running, the program you are currently working on is described as running in the ___.',
+                        options: ['foreground', 'background'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_23',
+                        topicId: 'module5',
+                        question: 'A ___ error occurs when the programmer uses an incorrect calculation or leaves out a programming procedure.',
+                        options: ['logic', 'syntax'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_24',
+                        topicId: 'module5',
+                        question: 'A ___ is a violation of the rules of the programming language (mistake or misspelling).',
+                        options: ['logic error', 'syntax error'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_25',
+                        topicId: 'module5',
+                        question: 'A ___ is like an outline of a program before it is written.',
+                        options: ['Machine language', 'Pseudocode', 'Object-oriented programming'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_26',
+                        topicId: 'module5',
+                        question: 'Select all the alternatives to the traditional systems life cycle.',
+                        options: ['rapid applications development (RAD)', 'prototyping', 'systems implementation'],
+                        correct: [0, 1],
+                        multiple: true,
+                        answersRequired: 2
+                    },
+                    {
+                        id: 'attached_27',
+                        topicId: 'module5',
+                        question: 'In the ___ phase of the systems life cycle, the present system is studied in depth and new requirements are specified.',
+                        options: ['systems design', 'systems analysis', 'preliminary investigation'],
+                        correct: 1
+                    },
+                    {
+                        id: 'attached_28',
+                        topicId: 'module5',
+                        question: 'The tasks of designing alternative systems, selecting the best system, and writing a systems design belong to which phase?',
+                        options: ['Phase 1', 'Phase 2', 'Phase 3 (Systems Design)'],
+                        correct: 2
+                    },
+                    {
+                        id: 'attached_29',
+                        topicId: 'module5',
+                        question: 'E is a numeric representation in the ___ system.',
+                        options: ['hexadecimal', 'binary', 'decimal'],
+                        correct: 0
+                    },
+                    {
+                        id: 'attached_30',
+                        topicId: 'module5',
+                        question: 'The binary conversion of the decimal number 57 is:',
+                        options: ['111010', '111101', '111001', '111000'],
+                        correct: 2
+                    }
                 ];
