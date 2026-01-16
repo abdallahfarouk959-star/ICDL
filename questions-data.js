@@ -313,7 +313,7 @@ const questions = [
                         question:
                             'ICT collects & processes data, and stores, analyze, and disseminates information for a specific purpose.',
                         options: ['True', 'False'],
-                        correct: 0,
+                        correct: 1,
                     },
                     {
                         id: 'q41',
@@ -3036,3 +3036,4 @@ const questions = [
                         correct: 2
                     }
                 ];
+
